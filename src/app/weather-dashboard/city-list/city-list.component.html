@@ -1,0 +1,9 @@
+<div class="city-list">
+    <app-city-card
+      *ngFor="let city of cities$ | async"
+      [city]="city"
+      (delete)="cityService.removeCity($event)"
+      (setCurrent)="cityService.setCurrentCity($event)">
+    </app-city-card>
+  </div>
+  
