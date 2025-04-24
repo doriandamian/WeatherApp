@@ -18,4 +18,12 @@ export class CityListComponent {
   constructor(public cityService: CityService) {
     this.cities$ = this.cityService.cities$;
   }
+
+  onDelete(city: City) {
+    this.cityService.removeCity(city);
+  }
+
+  onSetCurrent(city: City) {
+    this.cityService.setCurrentCity(city);
+  }
 }

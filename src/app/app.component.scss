@@ -1,5 +1,7 @@
 .dashboard-container {
   display: flex;
   min-height: 100vh;
+  height: 100%;
+  flex-direction: row;
   font-family: sans-serif;
 }

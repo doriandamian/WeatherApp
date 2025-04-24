@@ -1,9 +1,22 @@
 <div class="city-list">
-    <app-city-card
-      *ngFor="let city of cities$ | async"
-      [city]="city"
-      (delete)="cityService.removeCity($event)"
-      (setCurrent)="cityService.setCurrentCity($event)">
-    </app-city-card>
-  </div>
+    <!-- scoatem direct async în template și reținem cities -->
+    <ng-container *ngIf="cities$ | async as cities">
+      <!-- dacă există cel puțin un oraș, afișăm card-urile -->
+      <ng-container *ngIf="cities.length > 0; else noCities">
+        <app-city-card
+          *ngFor="let city of cities"
+          [city]="city"
+          (delete)="onDelete($event)"
+          (setCurrent)="onSetCurrent($event)">
+        </app-city-card>
+      </ng-container>
+    </ng-container>
   
+    <!-- placeholder atunci când nu sunt orașe -->
+    <ng-template #noCities>
+      <div class="empty-placeholder">
+        <p>Nicio locație adăugată încă.</p>
+        <p>Caută un oraș în bara de sus și apasă Enter pentru a-l adăuga.</p>
+      </div>
+    </ng-template>
+  </div>

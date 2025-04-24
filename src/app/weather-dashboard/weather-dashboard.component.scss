@@ -197,6 +197,7 @@
   display: flex;
   min-height: 100vh;
   font-family: sans-serif;
+  width: 100rem;
 }
 
 .main-content {
@@ -204,6 +205,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .location-section {
