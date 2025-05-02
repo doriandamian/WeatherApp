@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
 import { CommonModule } from '@angular/common';
-
-
+import { CardModule } from 'primeng/card'; 
+import { PanelModule } from 'primeng/panel';
  
  
 @Component({
   selector: 'app-weather-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CardModule, PanelModule],
   templateUrl: './weather-dashboard.component.html',
-  styleUrls: ['./weather-dashboard.component.scss']
+  styleUrls: ['./weather-dashboard.component.scss'],
 })
 export class WeatherDashboardComponent implements OnInit {
  
