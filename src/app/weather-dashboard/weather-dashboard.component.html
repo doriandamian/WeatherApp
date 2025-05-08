@@ -50,17 +50,14 @@
         <div class="highlight-card" *ngIf="weatherData">
             <p class="highlight-title">Temperature</p>
             <p class="highlight-value">{{ weatherData.current.temperature_2m }} °C</p>
-            <p class="highlight-description">Current Temperature</p>
         </div>
         <div class="highlight-card" *ngIf="weatherData">
             <p class="highlight-title">Wind Speed</p>
             <p class="highlight-value">{{ weatherData.current.wind_speed_10m }} km/h</p>
-            <p class="highlight-description">Current Wind Speed</p>
         </div>
         <div class="highlight-card">
           <p class="highlight-title">Precipitation</p>
           <p class="highlight-value">{{ weatherData.current.precipitation }} mm</p>
-          <p class="highlight-description">Precipitation (rain + showers + snow)</p>
         </div>
         <div class="highlight-card">
           <p class="highlight-title">Precipitation Probability</p>
