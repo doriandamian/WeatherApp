@@ -6,6 +6,7 @@ import { WeatherGraphComponent } from "./highlights-grid/weather-graph/weather-g
 import { CommonModule } from '@angular/common';
 import { CityService } from '../shared/services/city.service';
 import { WeatherService } from '../shared/services/weather.service';
+import { HistoricalWeatherService } from '../shared/services/historical-weather.service';
  
 @Component({
   selector: 'app-weather-dashboard',
@@ -17,6 +18,7 @@ import { WeatherService } from '../shared/services/weather.service';
 export class WeatherDashboardComponent {
   constructor(
     public cityService: CityService,
-    public weatherService: WeatherService
+    public weatherService: WeatherService,
+    public historicalWeather: HistoricalWeatherService
   ) {}
 }
