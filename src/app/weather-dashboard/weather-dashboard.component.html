@@ -52,19 +52,38 @@
             <p class="highlight-value">{{ weatherData.current.temperature_2m }} °C</p>
             <p class="highlight-description">Current Temperature</p>
         </div>
-
         <div class="highlight-card" *ngIf="weatherData">
             <p class="highlight-title">Wind Speed</p>
             <p class="highlight-value">{{ weatherData.current.wind_speed_10m }} km/h</p>
             <p class="highlight-description">Current Wind Speed</p>
         </div>
-         <div class="highlight-card">Precipitation (rain + showers + snow)</div>
-          <div class="highlight-card">Precipitation Probability</div>
-          <div class="highlight-card">Visibility</div>
-          <div class="highlight-card">UV index</div>
-          <div class="highlight-card">Apparent Temperature</div>
+        <div class="highlight-card">
+          <p class="highlight-title">Precipitation</p>
+          <p class="highlight-value">{{ weatherData.current.precipitation }} mm</p>
+          <p class="highlight-description">Precipitation (rain + showers + snow)</p>
         </div>
-      </section>
+        <div class="highlight-card">
+          <p class="highlight-title">Precipitation Probability</p>
+          <p class="highlight-value">{{ weatherData.current.precitipation_probability }} %</p>
+          <p class="highlight-description">Precipitation Probability</p>
+        </div>
+        <div class="highlight-card">
+          <p class="highlight-title">Cloud Cover</p>
+          <p class="highlight-value">{{ weatherData.current.cloud_cover }} %</p>
+          <p class="highlight-description">Visibility</p>
+        </div>
+        <div class="highlight-card">UV index
+          <p class="highlight-title">UV index</p>
+          <p class="highlight-value">{{ weatherData.current.weather_code }}</p>
+          <p class="highlight-description">Weather</p>
+        </div>
+        <div class="highlight-card" *ngIf="weatherData">
+          <p class="highlight-title">Apparent Temperature</p>
+          <p class="highlight-value">{{ weatherData.current.apparent_temperature }} °C</p>
+          <p class="highlight-description">Feels Like</p>
+        </div>
+      </div>
+    </section>
    
       <section class="graph-section">
         <div class="graph-container">
