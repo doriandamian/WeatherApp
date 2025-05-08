@@ -15,9 +15,11 @@ import { PanelModule } from 'primeng/panel';
 export class WeatherDashboardComponent implements OnInit {
  
   weatherData: any;
-  latitude: number = 52.52;   
-  longitude: number = 13.41;  
-  loading: boolean = true; 
+  latitude: number = 46.7712;   
+  longitude: number = 23.5922;  
+  loading: boolean = true;
+  errorMessage: string | null = null;
+  searchTerm: string = ''; 
  
   constructor(private weatherService: WeatherService) { }
  

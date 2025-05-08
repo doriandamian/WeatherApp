@@ -32,7 +32,8 @@
             </svg>
           </button>
           <div class="location-display">
-            Current Location Placeholder
+            <span *ngIf="weatherData">Current Location: {{ weatherData.timezone }}</span>
+            <span *ngIf="!weatherData">Loading Location...</span>
           </div>
           <button class="slide-button right">
             <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
@@ -45,8 +46,19 @@
       <section class="highlights-section">
         <h2>Today's highlight</h2>
         <div class="highlight-grid">
-          <div class="highlight-card">Temperature card</div>
-          <div class="highlight-card">Precipitation (rain + showers + snow)</div>
+
+        <div class="highlight-card" *ngIf="weatherData">
+            <p class="highlight-title">Temperature</p>
+            <p class="highlight-value">{{ weatherData.current.temperature_2m }} °C</p>
+            <p class="highlight-description">Current Temperature</p>
+        </div>
+
+        <div class="highlight-card" *ngIf="weatherData">
+            <p class="highlight-title">Wind Speed</p>
+            <p class="highlight-value">{{ weatherData.current.wind_speed_10m }} km/h</p>
+            <p class="highlight-description">Current Wind Speed</p>
+        </div>
+         <div class="highlight-card">Precipitation (rain + showers + snow)</div>
           <div class="highlight-card">Precipitation Probability</div>
           <div class="highlight-card">Visibility</div>
           <div class="highlight-card">UV index</div>
