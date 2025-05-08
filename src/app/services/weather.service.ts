@@ -15,8 +15,8 @@ private baseUrl = 'https://api.open-meteo.com/v1/forecast';
     const params = {
       latitude: latitude.toString(),
       longitude: longitude.toString(),
-      current: 'temperature_2m,wind_speed_10m,precipitation,cloud_cover,apparent_temperature,weather_code', 
-      hourly: 'temperature_2m,wind_speed_10m', 
+      current: 'temperature_2m,wind_speed_10m,precipitation,precipitation_probability,cloud_cover,apparent_temperature,weather_code', 
+      hourly: 'temperature_2m,wind_speed_10m,precipitation,precipitation_probability,cloud_cover,apparent_temperature,weather_code', 
       timezone: 'auto'
     };
  
