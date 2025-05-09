@@ -1,10 +1,11 @@
-<p-card class="city-card">
-    <div class="city-name">{{ city.name }}</div>
-    <div class="card-actions">
-      <button pButton type="button" label="Set Current" (click)="setCurrent.emit(city)"></button>
-      <button pButton type="button" icon="pi pi-trash" class="p-button-danger"
-              (click)="delete.emit(city)">
-      </button>
-    </div>
-  </p-card>
-  
+<!-- <p-card class="city-card" (click)="setCurrent.emit(city)">
+  <div class="p-card-body">
+    <h3 class="city-name">{{ city.name }}</h3>
+  </div>
+  <button class="delete-btn" (click)="onDelete($event)">×</button>
+</p-card> -->
+
+<div class="city-card" (click)="setCurrent.emit(city)">
+  <span class="delete-btn" (click)="onDelete($event)">×</span>
+  <div class="city-name">{{ city.name }}</div>
+</div>

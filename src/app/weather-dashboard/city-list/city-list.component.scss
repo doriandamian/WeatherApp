@@ -1,18 +1,83 @@
+// .city-list {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: nowrap;         /* nu se sparge pe mai multe rânduri */
+//   overflow-x: auto;          /* scroll orizontal dacă depășește lățimea */
+//   overflow-y: hidden;        /* ascunde scroll-ul vertical */
+//   gap: 1rem;                 /* spațiu între carduri */
+//   padding: 0.5rem 0;         /* puțin padding sus/jos */
+
+//   /* opțional: stil scrollbar */
+//   &::-webkit-scrollbar {
+//     height: 6px;
+//   }
+//   &::-webkit-scrollbar-thumb {
+//     background-color: rgba(0,0,0,0.2);
+//     border-radius: 3px;
+//   }
+//   &::-webkit-scrollbar-track {
+//     background: transparent;
+//   }
+
+//   .empty-placeholder {
+//     width: 100%;
+//     padding: 2rem;
+//     text-align: center;
+//     color: #777;
+//     background-color: #f5f5f5;
+//     border: 1px dashed #ccc;
+//     border-radius: 8px;
+//     font-style: italic;
+//   }
+// }
+
+:host {
+  display: block;
+}
+
 .city-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-
-  .empty-placeholder {
-    width: 100%;
-    padding: 2rem;
-    text-align: center;
-    color: #777;
-    background-color: #f5f5f5;
-    border: 1px dashed #ccc;
-    border-radius: 8px;
-    font-style: italic;
+  flex-wrap: nowrap;        /* un singur rând */
+  gap: 1rem;                /* spațiu între carduri */
+  padding: 0.5rem 0;        /* puțin aer sus/jos */
+  
+  /* scroll doar când e nevoie */
+  overflow-x: auto;
+  overflow-y: hidden;
+  
+  /* ascunde scrollbar-ul implicit până la hover (WebKit) */
+  &::-webkit-scrollbar {
+    height: 6px;
+    background: transparent;
   }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
 }
+
+/* fiecare card ocupă spațiul său, nu se întinde */
+.city-list > app-city-card {
+  flex: 0 0 auto;
+}
+
+.empty-placeholder {
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: #777;
+  background-color: #f5f5f5;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  font-style: italic;
+}
+

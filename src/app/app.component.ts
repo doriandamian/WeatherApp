@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { WeatherDashboardComponent } from './weather-dashboard/weather-dashboard.component';
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-root',

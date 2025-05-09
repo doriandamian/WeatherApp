@@ -1,7 +1,5 @@
-<div class="city-list">
-    <!-- scoatem direct async în template și reținem cities -->
+<!-- <div class="city-list">
     <ng-container *ngIf="cities$ | async as cities">
-      <!-- dacă există cel puțin un oraș, afișăm card-urile -->
       <ng-container *ngIf="cities.length > 0; else noCities">
         <app-city-card
           *ngFor="let city of cities"
@@ -12,11 +10,33 @@
       </ng-container>
     </ng-container>
   
-    <!-- placeholder atunci când nu sunt orașe -->
     <ng-template #noCities>
       <div class="empty-placeholder">
         <p>Nicio locație adăugată încă.</p>
         <p>Caută un oraș în bara de sus și apasă Enter pentru a-l adăuga.</p>
       </div>
     </ng-template>
+  </div> -->
+
+<ng-container *ngIf="cities$ | async as cities">
+  <!-- dacă avem cel puțin un oraș, afișăm grid-ul scroll-abil -->
+  <div class="city-list" *ngIf="cities.length > 0; else noCities">
+    <app-city-card
+      *ngFor="let city of cities"
+      [city]="city"
+      (delete)="onDelete($event)"
+      (setCurrent)="onSetCurrent($event)"
+    >
+    </app-city-card>
   </div>
+
+  <!-- dacă nu avem orașe, afișăm placeholder full-width -->
+  <ng-template #noCities>
+    <div class="empty-placeholder">
+      <p>No locations added yet.</p>
+      <p>
+        Search for a city in the search bar above and select it to add it.
+      </p>
+    </div>
+  </ng-template>
+</ng-container>

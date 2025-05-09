@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { City } from '../../shared/models/city.model';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { GeocodingService } from '../../shared/services/geocoding.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-search-bar',
@@ -22,19 +23,10 @@ export class SearchBarComponent {
   searchCities(event: { query: string }) {
     this.geoService.searchCities(event.query)
       .subscribe(list => this.filteredCities = list);
+      console.log(this.filteredCities);
   }
 
   onSelect(city: City) {
-    this.emitAndClear(city);
-  }
-
-  addCityFromQuery() {
-    const name = this.query.trim();
-    if (!name) {
-      return;
-    }
-    // dacă nu vrei geocoding, pui coordonate fixe sau ți le calculezi altfel
-    const city: City = { name, lat: 44.4268, lon: 26.1025, isCurrent: false };
     this.emitAndClear(city);
   }
 
