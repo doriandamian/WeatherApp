@@ -12,7 +12,7 @@ export class HistoricalWeatherService {
 
   constructor(private http: HttpClient) { }
 
-  getHistoricalWeather(latitude: number = 44.43, longitude: number = 26.09){
+  getHistoricalWeather(latitude: number = 44.439663, longitude: number = 26.096306){
 
     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
     const sevenDaysAgo = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
