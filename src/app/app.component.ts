@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { WeatherDashboardComponent } from './weather-dashboard/weather-dashboard.component';
+import { SidebarComponent } from "./sidebar/sidebar.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [WeatherDashboardComponent],
+  imports: [WeatherDashboardComponent, SidebarComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
