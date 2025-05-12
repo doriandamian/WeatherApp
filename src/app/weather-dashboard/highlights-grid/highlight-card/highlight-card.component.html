@@ -1,13 +1,5 @@
-<p-card class="highlight-card">
-    <ng-container [ngSwitch]="type">
-      <div *ngSwitchCase="'temperature'">Temperature card</div>
-      <div *ngSwitchCase="'precipitation'">
-        Precipitation (rain + showers + snow)
-      </div>
-      <div *ngSwitchCase="'precipProb'">Precipitation Probability</div>
-      <div *ngSwitchCase="'visibility'">Visibility</div>
-      <div *ngSwitchCase="'uvIndex'">UV index</div>
-      <div *ngSwitchCase="'apparentTemp'">Apparent Temperature</div>
-    </ng-container>
-  </p-card>
+<p-card *ngIf="data" class="highlight-card">
+  <div class="label">{{ label }}</div>
+  <div class="value">{{ value }}</div>
+</p-card>
   

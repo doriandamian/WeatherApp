@@ -16,7 +16,6 @@ export class CityCardComponent {
   @Output() delete = new EventEmitter<City>();
   @Output() setCurrent = new EventEmitter<City>();
 
-  /** Prinde click-ul pe X și oprește propagarea click-ului pe card */
   onDelete(event: MouseEvent) {
     event.stopPropagation();
     this.delete.emit(this.city);

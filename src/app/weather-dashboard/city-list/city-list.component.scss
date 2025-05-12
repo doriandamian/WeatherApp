@@ -31,47 +31,36 @@
 //   }
 // }
 
-:host {
-  display: block;
-}
+.city-carousel {
+  margin-top: 2rem;
 
-.city-list {
-  display: flex;
-  flex-wrap: nowrap;        /* un singur rând */
-  gap: 1rem;                /* spațiu între carduri */
-  padding: 0.5rem 0;        /* puțin aer sus/jos */
-  
-  /* scroll doar când e nevoie */
-  overflow-x: auto;
-  overflow-y: hidden;
-  
-  /* ascunde scrollbar-ul implicit până la hover (WebKit) */
-  &::-webkit-scrollbar {
-    height: 6px;
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 3px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  &:hover::-webkit-scrollbar-thumb {
-    opacity: 1;
+  .p-carousel-container {
+    /* opțional: ajustează înălţimea pentru card-uri */
+    min-height: 6rem;
   }
 
-  /* Firefox */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.2) transparent;
-}
+  .p-carousel-item {
+    display: flex;
+    justify-content: center;
+  }
 
-/* fiecare card ocupă spațiul său, nu se întinde */
-.city-list > app-city-card {
-  flex: 0 0 auto;
+  /* suprascrie butoanele left/right */
+  ::ng-deep .p-carousel-prev,
+  ::ng-deep .p-carousel-next {
+    background-color: lightcyan;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    margin: 1rem;
+  }
+  ::ng-deep .p-carousel-prev:hover,
+  ::ng-deep .p-carousel-next:hover {
+    background-color: lightblue;
+  }
 }
-
 .empty-placeholder {
-  width: 100%;
   padding: 2rem;
   text-align: center;
   color: #777;
@@ -80,4 +69,3 @@
   border-radius: 8px;
   font-style: italic;
 }
-

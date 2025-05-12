@@ -6,6 +6,9 @@ import { WeatherGraphComponent } from "./highlights-grid/weather-graph/weather-g
 import { CommonModule } from '@angular/common';
 import { CityService } from '../shared/services/city.service';
 import { WeatherService } from '../shared/services/weather.service';
+import { filter, Observable, switchMap } from 'rxjs';
+import { WeatherData } from '../shared/models/weather.model';
+import { City } from '../shared/models/city.model';
  
 @Component({
   selector: 'app-weather-dashboard',
@@ -15,8 +18,20 @@ import { WeatherService } from '../shared/services/weather.service';
   imports: [SearchBarComponent, CityListComponent, HighlightsGridComponent, WeatherGraphComponent, CommonModule]    
 })
 export class WeatherDashboardComponent {
+  currentWeather$!: Observable<WeatherData>;
+  
   constructor(
     public cityService: CityService,
     public weatherService: WeatherService
   ) {}
+
+  ngOnInit() {
+    // de fiecare dată când se schimbă currentCity, facem fetch și emitem noul WeatherData
+    this.currentWeather$ = this.cityService.currentCity$.pipe(
+      // 1) filtrăm doar orașele nenule
+      filter((city): city is City => city !== null),
+      // 2) pentru fiecare oraș valid facem fetch
+      switchMap(city => this.weatherService.getCurrentWeather(city))
+    );
+  }
 }

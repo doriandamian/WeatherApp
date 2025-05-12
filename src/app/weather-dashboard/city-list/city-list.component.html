@@ -1,42 +1,27 @@
-<!-- <div class="city-list">
-    <ng-container *ngIf="cities$ | async as cities">
-      <ng-container *ngIf="cities.length > 0; else noCities">
-        <app-city-card
-          *ngFor="let city of cities"
-          [city]="city"
-          (delete)="onDelete($event)"
-          (setCurrent)="onSetCurrent($event)">
-        </app-city-card>
-      </ng-container>
-    </ng-container>
-  
-    <ng-template #noCities>
-      <div class="empty-placeholder">
-        <p>Nicio locație adăugată încă.</p>
-        <p>Caută un oraș în bara de sus și apasă Enter pentru a-l adăuga.</p>
-      </div>
-    </ng-template>
-  </div> -->
-
 <ng-container *ngIf="cities$ | async as cities">
-  <!-- dacă avem cel puțin un oraș, afișăm grid-ul scroll-abil -->
-  <div class="city-list" *ngIf="cities.length > 0; else noCities">
-    <app-city-card
-      *ngFor="let city of cities"
-      [city]="city"
-      (delete)="onDelete($event)"
-      (setCurrent)="onSetCurrent($event)"
-    >
-    </app-city-card>
-  </div>
+  <p-carousel
+    *ngIf="cities.length; else noCities"
+    [value]="cities"
+    [numVisible]="5"            
+    [numScroll]="1"             
+    [circular]="false"
+    [showIndicators]="false"
+    [showNavigators]="cities.length > 3"
+    class="city-carousel"
+  >
+    <ng-template pTemplate="item" let-city>
+      <app-city-card
+        [city]="city"
+        (delete)="onDelete(city)"
+        (setCurrent)="onSetCurrent(city)"
+      ></app-city-card>
+    </ng-template>
+  </p-carousel>
 
-  <!-- dacă nu avem orașe, afișăm placeholder full-width -->
   <ng-template #noCities>
     <div class="empty-placeholder">
       <p>No locations added yet.</p>
-      <p>
-        Search for a city in the search bar above and select it to add it.
-      </p>
+      <p>Search for a city in the search bar above and select it to add it.</p>
     </div>
   </ng-template>
 </ng-container>

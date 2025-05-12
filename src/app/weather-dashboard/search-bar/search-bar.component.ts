@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { City } from '../../shared/models/city.model';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -18,7 +18,7 @@ export class SearchBarComponent {
   filteredCities: City[] = [];
   @Output() citySelected = new EventEmitter<City>();
 
-  constructor(private geoService: GeocodingService) {}
+  constructor(private geoService: GeocodingService, private renderer: Renderer2) {}
 
   searchCities(event: { query: string }) {
     this.geoService.searchCities(event.query)
