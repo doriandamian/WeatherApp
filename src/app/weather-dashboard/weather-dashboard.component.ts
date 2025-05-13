@@ -9,6 +9,8 @@ import { WeatherService } from '../shared/services/weather.service';
 import { filter, Observable, switchMap } from 'rxjs';
 import { WeatherData } from '../shared/models/weather.model';
 import { City } from '../shared/models/city.model';
+import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
  
 @Component({
   selector: 'app-weather-dashboard',
