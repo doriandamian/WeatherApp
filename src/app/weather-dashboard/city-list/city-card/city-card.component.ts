@@ -9,10 +9,15 @@ import { City } from '../../../shared/models/city.model';
   standalone: true,
   imports: [CommonModule, CardModule, ButtonModule],
   templateUrl: './city-card.component.html',
-  styleUrl: './city-card.component.scss'
+  styleUrls: ['./city-card.component.scss']
 })
 export class CityCardComponent {
   @Input() city!: City;
   @Output() delete = new EventEmitter<City>();
   @Output() setCurrent = new EventEmitter<City>();
+
+  onDelete(event: MouseEvent) {
+    event.stopPropagation();
+    this.delete.emit(this.city);
+  }
 }

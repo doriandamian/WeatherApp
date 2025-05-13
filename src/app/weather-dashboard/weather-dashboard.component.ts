@@ -6,9 +6,9 @@ import { WeatherGraphComponent } from "./highlights-grid/weather-graph/weather-g
 import { CommonModule } from '@angular/common';
 import { CityService } from '../shared/services/city.service';
 import { WeatherService } from '../shared/services/weather.service';
-import { CardModule } from 'primeng/card'; 
-import { PanelModule } from 'primeng/panel';
-
+import { filter, Observable, switchMap } from 'rxjs';
+import { WeatherData } from '../shared/models/weather.model';
+import { City } from '../shared/models/city.model';
  
 @Component({
   selector: 'app-weather-dashboard',
@@ -18,33 +18,20 @@ import { PanelModule } from 'primeng/panel';
   imports: [SearchBarComponent, CityListComponent, HighlightsGridComponent, WeatherGraphComponent, CommonModule, CardModule, PanelModule]    
 })
 export class WeatherDashboardComponent {
-  weatherData: any;
-  latitude: number = 44.439663;   
-  longitude: number = 26.096306;  
-  loading: boolean = true;
-  errorMessage: string | null = null;
-  searchTerm: string = ''; 
+  currentWeather$!: Observable<WeatherData>;
   
   constructor(
     public cityService: CityService,
     public weatherService: WeatherService
   ) {}
-  
-    ngOnInit(): void {
-    this.getWeatherData();
-  }
- 
-  getWeatherData(): void {
-    this.loading = true; 
-    this.weatherService.getWeather(this.latitude, this.longitude).subscribe({
-      next: (data) => {
-        this.weatherData = data;
-        this.loading = false; 
-      },
-      error: (error) => {
-        console.error('Error fetching weather data:', error);
-        this.loading = false; 
-      }
-    });
+
+  ngOnInit() {
+    // de fiecare dată când se schimbă currentCity, facem fetch și emitem noul WeatherData
+    this.currentWeather$ = this.cityService.currentCity$.pipe(
+      // 1) filtrăm doar orașele nenule
+      filter((city): city is City => city !== null),
+      // 2) pentru fiecare oraș valid facem fetch
+      switchMap(city => this.weatherService.getCurrentWeather(city))
+    );
   }
 }

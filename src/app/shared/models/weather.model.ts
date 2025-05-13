@@ -1,10 +1,10 @@
 export interface WeatherData {
     temperature: number;
-    windSpeed: number;
-    uvIndex: number;
-    visibility: number;
-    precipitationProbability: number;
-    time: string;
+    uvIndex: string;
+    visibility: string;
+    precipitationProbability: string;
+    precipitation: string;
+    apparentTemperature: string;
   }
   
   export interface HistoricalData {
