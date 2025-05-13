@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchBarComponent } from "./search-bar/search-bar.component";
 import { CityListComponent } from "./city-list/city-list.component";
 import { HighlightsGridComponent } from "./highlights-grid/highlights-grid.component";
@@ -15,7 +15,7 @@ import { City } from '../shared/models/city.model';
   standalone: true,
   templateUrl: './weather-dashboard.component.html', 
   styleUrls: ['./weather-dashboard.component.scss'],
-  imports: [SearchBarComponent, CityListComponent, HighlightsGridComponent, WeatherGraphComponent, CommonModule]    
+  imports: [SearchBarComponent, CityListComponent, HighlightsGridComponent, WeatherGraphComponent, CommonModule, CardModule, PanelModule]    
 })
 export class WeatherDashboardComponent {
   currentWeather$!: Observable<WeatherData>;
