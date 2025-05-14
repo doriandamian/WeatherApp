@@ -7,11 +7,11 @@ import { City } from '../models/city.model';
 import { WeatherData, HistoricalData } from '../models/weather.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeatherService {
   private forecastUrl = 'https://api.open-meteo.com/v1/forecast';
-  private archiveUrl  = 'https://archive-api.open-meteo.com/v1/archive';
+  private archiveUrl = 'https://archive-api.open-meteo.com/v1/archive';
 
   constructor(private http: HttpClient) {}
 
@@ -24,16 +24,19 @@ export class WeatherService {
    */
   getCurrentWeather(city: City): Observable<WeatherData> {
     const params = new HttpParams()
-      .set('latitude',  city.lat.toString())
+      .set('latitude', city.lat.toString())
       .set('longitude', city.lon.toString())
       .set('current_weather', 'true')
-      .set('hourly', 'temperature_2m,precipitation_probability,uv_index,visibility')
+      .set(
+        'hourly',
+        'temperature_2m,precipitation,precipitation_probability,uv_index,visibility,apparent_temperature'
+      )
       .set('timezone', 'auto');
 
     return this.http
-      .get<{ current_weather: any }>(this.forecastUrl, { params })
+      .get<{ current_weather: any; hourly: any }>(this.forecastUrl, { params })
       .pipe(
-        map(res => this.toWeatherData(res.current_weather)),
+        map((res) => this.toWeatherData(res.current_weather, res.hourly)),
         shareReplay({ bufferSize: 1, refCount: true })
       );
   }
@@ -49,28 +52,32 @@ export class WeatherService {
     endDate: string
   ): Observable<HistoricalData[]> {
     const params = new HttpParams()
-      .set('latitude',  city.lat.toString())
+      .set('latitude', city.lat.toString())
       .set('longitude', city.lon.toString())
       .set('start_date', startDate)
-      .set('end_date',   endDate)
-      .set('daily',      'temperature_2m_max,temperature_2m_min')
-      .set('timezone',   'auto');
+      .set('end_date', endDate)
+      .set('daily', 'temperature_2m_max,temperature_2m_min')
+      .set('timezone', 'auto');
 
     return this.http
       .get<any>(this.archiveUrl, { params })
-      .pipe(
-        map(res => this.toHistoricalData(res.daily))
-      );
+      .pipe(map((res) => this.toHistoricalData(res.daily)));
   }
 
-  private toWeatherData(raw: any): WeatherData {
+  private toWeatherData(current: any, hourly: any): WeatherData {
+    const [datePart, timePart] = current.time.split('T');
+    const hour = timePart.split(':')[0];
+    const flooredTime = `${datePart}T${hour}:00`;
+    const idx = hourly.time.indexOf(flooredTime);
     return {
-      temperature: raw.temperature,
-      windSpeed:   raw.windspeed,
-      uvIndex:     raw.uv_index,
-      visibility:  raw.visibility,
-      precipitationProbability: raw.precipitation_probability,
-      time:        raw.time
+      temperature: current.temperature,
+      uvIndex: idx >= 0 ? hourly.uv_index[idx].toFixed(1) : 'N/A',
+      visibility: idx >= 0 ? (hourly.visibility[idx]/1000).toFixed(1) : 'N/A',
+      precipitationProbability: idx >= 0 ? hourly.precipitation_probability[idx].toFixed(1) : 'N/A',
+      precipitation:
+        idx >= 0 ? `${hourly.precipitation[idx].toFixed(1)} mm` : 'N/A',
+      apparentTemperature:
+        idx >= 0 ? hourly.apparent_temperature[idx] : current.temperature,
     };
   }
 
@@ -78,7 +85,7 @@ export class WeatherService {
     return rawDaily.time.map((date: string, i: number) => ({
       date,
       tempMax: rawDaily.temperature_2m_max[i],
-      tempMin: rawDaily.temperature_2m_min[i]
+      tempMin: rawDaily.temperature_2m_min[i],
     }));
   }
 }

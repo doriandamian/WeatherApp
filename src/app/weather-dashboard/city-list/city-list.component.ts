@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { CityService } from '../../shared/services/city.service';
 import { Observable } from 'rxjs';
 import { City } from '../../shared/models/city.model';
+import { CarouselModule } from 'primeng/carousel';
 
 @Component({
   selector: 'app-city-list',
   standalone: true,
-  imports: [CityCardComponent, CommonModule],
+  imports: [CityCardComponent, CommonModule, CarouselModule],
   templateUrl: './city-list.component.html',
   styleUrl: './city-list.component.scss'
 })

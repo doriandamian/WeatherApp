@@ -7,11 +7,29 @@ import { City } from '../models/city.model';
   providedIn: 'root'
 })
 export class CityService {
+
+  private readonly STORAGE_KEY = 'weather_app_cities';
+
   private citiesSubject = new BehaviorSubject<City[]>([]);
   readonly cities$ = this.citiesSubject.asObservable();
 
   private currentCitySubject = new BehaviorSubject<City | null>(null);
   readonly currentCity$ = this.currentCitySubject.asObservable();
+
+  constructor() {
+    // 1. Încarcă lista de orașe din localStorage sau initializează gol
+    const stored = localStorage.getItem(this.STORAGE_KEY);
+    const cities: City[] = stored ? JSON.parse(stored) : [];
+
+    // Inițializează BehaviorSubjects
+    this.citiesSubject = new BehaviorSubject<City[]>(cities);
+    this.cities$ = this.citiesSubject.asObservable();
+
+    // Găsește orașul marcat isCurrent sau null
+    const current = cities.find(c => c.isCurrent) || null;
+    this.currentCitySubject = new BehaviorSubject<City | null>(current);
+    this.currentCity$ = this.currentCitySubject.asObservable();
+  }
 
   /** Adaugă un oraș dacă nu există deja și, dacă e primul, îl setează current */
   addCity(city: City): void {
@@ -19,6 +37,12 @@ export class CityService {
     if (cities.find(c => c.name === city.name)) {
       return;
     }
+
+    const updated = [...cities, { ...city, isCurrent: false }];
+    this.citiesSubject.next(updated);
+    this.saveToStorage();
+
+
     this.citiesSubject.next([...cities, { ...city, isCurrent: false }]);
     if (!this.currentCitySubject.getValue()) {
       this.setCurrentCity(city);
@@ -29,6 +53,7 @@ export class CityService {
   removeCity(city: City): void {
     const filtered = this.citiesSubject.getValue().filter(c => c.name !== city.name);
     this.citiesSubject.next(filtered);
+    this.saveToStorage();
 
     const current = this.currentCitySubject.getValue();
     if (current?.name === city.name) {
@@ -51,5 +76,13 @@ export class CityService {
       isCurrent: selected ? c.name === selected.name : false
     }));
     this.citiesSubject.next(updated);
+    this.saveToStorage();
+  }
+
+  private saveToStorage(): void {
+    localStorage.setItem(
+      this.STORAGE_KEY,
+      JSON.stringify(this.citiesSubject.getValue())
+    );
   }
 }

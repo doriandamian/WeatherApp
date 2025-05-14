@@ -209,7 +209,11 @@
 }
 
 .location-section {
+  margin-top: 1rem;
   margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
+  align-items: center;
+  width: 100%;
+  // overflow-x: scroll;
 }
