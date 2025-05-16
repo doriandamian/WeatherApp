@@ -1,119 +1,19 @@
-<div class="dashboard-container">
-    <aside class="sidebar">
-      <button class="sidebar-button">
-        <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-          <path d="M12 20v-8M5 12l7-7 7 7M3 21h18"></path>
-        </svg>
-        Weather
-      </button>
-      <button class="sidebar-button active">
-        <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"></path>
-        </svg>
-        Home
-      </button>
-    </aside>
-   
-    <main class="main-content">
-      <header class="top-bar">
-        <input type="text" placeholder="Search here..." class="search-input">
-        <button class="search-button">
-          <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-          </svg>
-        </button>
-      </header>
-   
-      <section class="location-section">
-        <div class="location-slider">
-          <button class="slide-button left">
-            <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-              <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>
-            </svg>
-          </button>
-          <div class="location-display">
-            <span *ngIf="weatherData">Current Location: {{ weatherData.timezone }}</span>
-            <span *ngIf="!weatherData">Loading Location...</span>
-          </div>
-          <button class="slide-button right">
-            <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
-            </svg>
-          </button>
-        </div>
-      </section>
-   
-      <section class="highlights-section">
-        <h2>Today's highlight</h2>
-        <div class="highlight-grid">
+<main class="main-content">
 
-        <div class="highlight-card" *ngIf="weatherData">
-            <p class="highlight-title">Temperature</p>
-            <p class="highlight-value">{{ weatherData.current.temperature_2m }} °C</p>
-        </div>
-        <div class="highlight-card" *ngIf="weatherData">
-            <p class="highlight-title">Wind Speed</p>
-            <p class="highlight-value">{{ weatherData.current.wind_speed_10m }} km/h</p>
-        </div>
-        <div class="highlight-card">
-          <p class="highlight-title">Precipitation</p>
-          <p class="highlight-value">{{ weatherData.current.precipitation }} mm</p>
-        </div>
-        <div class="highlight-card">
-          <p class="highlight-title">Precipitation Probability</p>
-          <p class="highlight-value">{{ weatherData.current.precipitation_probability }} %</p>
-          <p class="highlight-description">Precipitation Probability</p>
-        </div>
-        <div class="highlight-card">
-          <p class="highlight-title">Cloud Cover</p>
-          <p class="highlight-value">{{ weatherData.current.cloud_cover }} %</p>
-        </div>
-        <div class="highlight-card">
-          <p class="highlight-title">UV index</p>
-          <p class="highlight-value">{{ weatherData.current.weather_code }}</p>
-        </div>
-        <div class="highlight-card" *ngIf="weatherData">
-          <p class="highlight-description">Feels Like</p>
-          <p class="highlight-value">{{ weatherData.current.apparent_temperature }} °C</p>
-        </div>
-      </div>
-    </section>
-   
-      <section class="graph-section">
-        <div class="graph-container">
-          Graph Placeholder
-        </div>
-      </section>
-    </main>
-   
-    <div class="user-info">
-      <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-        <path d="M12 4a4 4 0 014 4 4 4 0 01-4 4 4 4 0 01-4-4 4 4 0 014-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"></path>
-      </svg>
-      Hello, User
-    </div>
-  </div>
+  <!-- SEARCH BAR -->
+  <app-search-bar (citySelected)="cityService.addCity($event)"></app-search-bar>
 
-<!--
-  <main class="main-content">
+  <!-- CITY LIST -->
+  <section class="location-section">
+    <app-city-list></app-city-list>
+  </section>
 
-    <!-- SEARCH BAR -->
-    <app-search-bar (citySelected)="cityService.addCity($event)"></app-search-bar>
+  <!-- HIGHLIGHTS GRID -->
+  <ng-container *ngIf="currentWeather$ | async as currentWeather">
+    <app-highlights-grid [data]="currentWeather"></app-highlights-grid>
+  </ng-container>
 
-    <!-- CITY LIST -->
-    <section class="location-section">
-      <app-city-list></app-city-list>
-    </section>
+  <!-- GRAPH -->
+  <app-weather-graph></app-weather-graph>
 
-    <!-- HIGHLIGHTS GRID -->
-    <ng-container *ngIf="currentWeather$ | async as currentWeather">
-      <app-highlights-grid [data]="currentWeather"></app-highlights-grid>
-    </ng-container>
-
-    <!-- GRAPH -->
-    <app-weather-graph></app-weather-graph>
-
-  </main>
-</div>
--->
-
+</main>
