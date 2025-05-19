@@ -1,15 +1,30 @@
 .highlights-section {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+}
+@media only screen and (min-width: 768px) {
+  .highlights-section {
   
     h2 {
       margin-top: 0;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
   
     .highlight-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
     }
   }
-  
+}
