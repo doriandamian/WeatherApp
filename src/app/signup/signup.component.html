@@ -1,0 +1,9 @@
+<div class="signup-container">
+  <h2>Sign up</h2>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <input type="email" placeholder="Email" [(ngModel)]="email">
+  <input type="password" placeholder="Password" [(ngModel)]="password">
+  <button (click)="signup()">Signup</button>
+
+  <p>Already have an account? <button mat-raised-button color="primary" routerLink="/login">Log in</button></p>
+</div>

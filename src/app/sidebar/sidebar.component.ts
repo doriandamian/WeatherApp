@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,6 +10,22 @@ import { Component } from '@angular/core';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent {
+
+export class SidebarComponent implements OnInit {
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+  }
+
+  logout() {
+    this.authService.logoutUser()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch(error => {
+        console.error('Logout error:', error);
+      });
+  }
 
 }

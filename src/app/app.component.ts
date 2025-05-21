@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { WeatherDashboardComponent } from './weather-dashboard/weather-dashboard.component';
-import { SidebarComponent } from "./sidebar/sidebar.component";
-import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [WeatherDashboardComponent, SidebarComponent, CommonModule],
-  templateUrl: './app.component.html',
+  imports: [RouterOutlet, RouterModule],
+  template: `
+    <router-outlet></router-outlet>
+  `,
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
