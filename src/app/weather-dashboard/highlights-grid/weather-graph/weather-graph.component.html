@@ -1,7 +1,11 @@
 <section class="graph-section">
-    <div class="graph-container">
-      <!-- aici intră p-chart sau orice grafic vrei tu -->
-      Graph Placeholder
-    </div>
-  </section>
-  
+  <div class="graph-container">
+    <canvas
+      baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      [type]="'line'"
+    >
+    </canvas>
+  </div>
+</section>

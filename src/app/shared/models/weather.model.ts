@@ -9,6 +9,5 @@ export interface WeatherData {
   
   export interface HistoricalData {
     date: string;
-    tempMax: number;
-    tempMin: number;
+    temp: number;
   }

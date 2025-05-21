@@ -44,24 +44,18 @@ export class WeatherService {
   /**
    * Date istorice (archive):
    * - daily temperature max/min
-   * startDate/endDate în format YYYY-MM-DD
    */
-  getHistoricalWeather(
-    city: City,
-    startDate: string,
-    endDate: string
-  ): Observable<HistoricalData[]> {
+  getHistoricalWeather(city: City): Observable<HistoricalData[]> {
     const params = new HttpParams()
       .set('latitude', city.lat.toString())
       .set('longitude', city.lon.toString())
-      .set('start_date', startDate)
-      .set('end_date', endDate)
-      .set('daily', 'temperature_2m_max,temperature_2m_min')
+      .set('past_days', 8)
+      .set('hourly', 'temperature_2m')
       .set('timezone', 'auto');
 
     return this.http
       .get<any>(this.archiveUrl, { params })
-      .pipe(map((res) => this.toHistoricalData(res.daily)));
+      .pipe(map((res) => this.toHistoricalData(res.hourly)));
   }
 
   private toWeatherData(current: any, hourly: any): WeatherData {
@@ -72,8 +66,9 @@ export class WeatherService {
     return {
       temperature: current.temperature,
       uvIndex: idx >= 0 ? hourly.uv_index[idx].toFixed(1) : 'N/A',
-      visibility: idx >= 0 ? (hourly.visibility[idx]/1000).toFixed(1) : 'N/A',
-      precipitationProbability: idx >= 0 ? hourly.precipitation_probability[idx].toFixed(1) : 'N/A',
+      visibility: idx >= 0 ? (hourly.visibility[idx] / 1000).toFixed(1) : 'N/A',
+      precipitationProbability:
+        idx >= 0 ? hourly.precipitation_probability[idx].toFixed(1) : 'N/A',
       precipitation:
         idx >= 0 ? `${hourly.precipitation[idx].toFixed(1)} mm` : 'N/A',
       apparentTemperature:
@@ -84,8 +79,7 @@ export class WeatherService {
   private toHistoricalData(rawDaily: any): HistoricalData[] {
     return rawDaily.time.map((date: string, i: number) => ({
       date,
-      tempMax: rawDaily.temperature_2m_max[i],
-      tempMin: rawDaily.temperature_2m_min[i],
+      temp: rawDaily.temperature_2m[i],
     }));
   }
 }

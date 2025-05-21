@@ -1,4 +1,3 @@
-
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -11,15 +10,36 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
+  overflow: hidden;
 
-.location-section {
-  margin-top: 1rem;
-  margin-bottom: 20px;
-  // display: flex;
-  // justify-content: center;
-  align-items: center;
-  width: 100%;
-  // overflow-x: scroll;
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 100%;
+
+    .location-section {
+      margin-top: 1rem;
+      margin-bottom: 20px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .data-container {
+      background-color: #efefef;
+      padding: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+
+      app-highlight-grid{
+        flex-grow: 2;
+      }
+
+      app-weather-graph{
+        flex-grow: 3;
+      }
+    }
+  }
 }

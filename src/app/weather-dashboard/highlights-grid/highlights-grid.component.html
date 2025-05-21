@@ -1,9 +1,9 @@
 <section class="highlights-section">
   <h2>Today's highlight</h2>
-  <ng-container *ngIf="data as d">
-    <div class="highlight-grid">
-      <app-highlight-card *ngFor="let type of types" [type]="type" [data]="d">
-      </app-highlight-card>
-    </div>
-  </ng-container>
+  <div class="highlight-grid">
+    <ng-container *ngIf="data as d">
+        <app-highlight-card *ngFor="let type of types" [type]="type" [data]="d" [id]="type">
+        </app-highlight-card>
+    </ng-container>
+  </div>
 </section>
