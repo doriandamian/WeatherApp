@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,18 @@ export class LoginComponent implements OnInit {
   email = '';
   password = '';
   errorMessage = '';
+  loggedIn = false;
+
+
+  private authSub!: Subscription;
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.authSub = this.authService.user$.subscribe(isLoggedIn => {
+      this.loggedIn = isLoggedIn;
+    });
+  }
 
   login() {
     const user = {
