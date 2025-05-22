@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { WeatherService } from '../../../shared/services/weather.service';
 import { HistoricalData } from '../../../shared/models/weather.model';
-import { filter, Observable, Subscription, switchMap } from 'rxjs';
+import { filter, Subscription, switchMap } from 'rxjs';
 import { CityService } from '../../../shared/services/city.service';
 import { City } from '../../../shared/models/city.model';
 import { ChartData, ChartOptions } from 'chart.js';

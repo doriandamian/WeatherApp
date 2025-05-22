@@ -1,4 +1,8 @@
-<div class="city-card" [class.active]="city.isCurrent" (click)="setCurrent.emit(city)">
+<div
+  class="city-card"
+  [class.active]="city.isCurrent"
+  (click)="setCurrent.emit(city)"
+>
   <span class="delete-btn" (click)="onDelete($event)">×</span>
   <div class="city-name">{{ city.name }}</div>
 </div>

@@ -8,7 +8,7 @@ import { WeatherData } from '../../../shared/models/weather.model';
   standalone: true,
   imports: [CommonModule, CardModule],
   templateUrl: './highlight-card.component.html',
-  styleUrl: './highlight-card.component.scss'
+  styleUrl: './highlight-card.component.scss',
 })
 export class HighlightCardComponent {
   @Input() type!: keyof WeatherData;
@@ -16,13 +16,20 @@ export class HighlightCardComponent {
 
   get label(): string {
     switch (this.type) {
-      case 'temperature': return 'Temperature';
-      case 'precipitation': return 'Precipitation';
-      case 'precipitationProbability': return 'Precip. Prob.';
-      case 'visibility': return 'Visibility';
-      case 'uvIndex': return 'UV Index';
-      case 'apparentTemperature': return 'Apparent Temp.';
-      default: return '';
+      case 'temperature':
+        return 'Temperature';
+      case 'precipitation':
+        return 'Precipitation';
+      case 'precipitationProbability':
+        return 'Precip. Prob.';
+      case 'visibility':
+        return 'Visibility';
+      case 'uvIndex':
+        return 'UV Index';
+      case 'apparentTemperature':
+        return 'Apparent Temp.';
+      default:
+        return '';
     }
   }
 
@@ -37,11 +44,11 @@ export class HighlightCardComponent {
       case 'precipitation':
         return v as string;
       case 'precipitationProbability':
-        return `${(v as number)} %`;
+        return `${v as number} %`;
       case 'visibility':
-        return `${(v as number)} km`;
+        return `${v as number} km`;
       case 'uvIndex':
-        return `${(v as number)}`;
+        return `${v as number}`;
       case 'apparentTemperature':
         return `${(v as number).toFixed(1)} °C`;
       default:

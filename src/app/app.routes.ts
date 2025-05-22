@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { WeatherDashboardComponent } from './weather-dashboard/weather-dashboard.component';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './shared/services/authentication/auth.guard';
 import { LayoutComponent } from './layout/layout.component';
-import { NoAuthGuard } from './services/no_auth.guard';
+import { NoAuthGuard } from './shared/services/authentication/no_auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
@@ -16,7 +16,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: WeatherDashboardComponent },
-    ]
+    ],
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];

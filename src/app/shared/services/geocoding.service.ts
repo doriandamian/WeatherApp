@@ -1,4 +1,3 @@
-// src/app/core/services/geocoding.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -15,16 +14,14 @@ export class GeocodingService {
     if (name.length < 2) {
       return of([]);
     }
-    const params = new HttpParams()
-      .set('name', name)
-      .set('count', '10');
+    const params = new HttpParams().set('name', name).set('count', '10');
     return this.http.get<any>(this.url, { params }).pipe(
-      map(res =>
+      map((res) =>
         (res.results || []).map((r: any) => ({
           name: `${r.name}, ${r.country}`,
           lat: r.latitude,
           lon: r.longitude,
-          isCurrent: false
+          isCurrent: false,
         }))
       ),
       catchError(() => of([]))

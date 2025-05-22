@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private userSubject = new BehaviorSubject<boolean>(false);
   public user$ = this.userSubject.asObservable();
 
@@ -28,12 +27,13 @@ export class AuthService {
   }
 
   loginUser(credentials: any): Promise<any> {
-    return this.afAuth.signInWithEmailAndPassword(credentials.email, credentials.password)
+    return this.afAuth
+      .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
         console.log('Auth Service: loginUser: success');
         this.userSubject.next(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Auth Service: login error...');
         console.log('error code', error.code);
         console.log('error', error);
@@ -43,27 +43,28 @@ export class AuthService {
   }
 
   signupUser(user: any): Promise<any> {
-    return this.afAuth.createUserWithEmailAndPassword(user.email, user.password)
+    return this.afAuth
+      .createUserWithEmailAndPassword(user.email, user.password)
       .then((result) => {
-        result.user?.sendEmailVerification()
-          .catch(error => {
-            console.error('Error sending verification email:', error);
-          });
+        result.user?.sendEmailVerification().catch((error) => {
+          console.error('Error sending verification email:', error);
+        });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Auth Service: signup error', error);
         return { isValid: false, message: error.message };
       });
   }
 
   logoutUser(): Promise<void> {
-    return this.afAuth.signOut()
+    return this.afAuth
+      .signOut()
       .then(() => {
         console.log('User logged out');
         this.userSubject.next(false);
         this.router.navigate(['/login']);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Logout error:', error);
       });
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CityCardComponent } from "./city-card/city-card.component";
+import { CityCardComponent } from './city-card/city-card.component';
 import { CommonModule } from '@angular/common';
 import { CityService } from '../../shared/services/city.service';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { CarouselModule } from 'primeng/carousel';
   standalone: true,
   imports: [CityCardComponent, CommonModule, CarouselModule],
   templateUrl: './city-list.component.html',
-  styleUrl: './city-list.component.scss'
+  styleUrl: './city-list.component.scss',
 })
 export class CityListComponent {
   cities$!: Observable<City[]>;

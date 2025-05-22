@@ -3,7 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-interface UnsplashResponse { results: Array<{ urls: { small: string } }> }
+interface UnsplashResponse {
+  results: Array<{ urls: { small: string } }>;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ImageService {
@@ -18,8 +20,8 @@ export class ImageService {
       .set('per_page', '1')
       .set('client_id', this.accessKey);
 
-    return this.http.get<UnsplashResponse>(this.apiUrl, { params }).pipe(
-      map(res => res.results[0]?.urls.small || '')
-    );
+    return this.http
+      .get<UnsplashResponse>(this.apiUrl, { params })
+      .pipe(map((res) => res.results[0]?.urls.small || ''));
   }
 }

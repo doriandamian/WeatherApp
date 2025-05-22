@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../shared/services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   email = '';
@@ -19,13 +19,12 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   loggedIn = false;
 
-
   private authSub!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void { 
-    this.authSub = this.authService.user$.subscribe(isLoggedIn => {
+  ngOnInit(): void {
+    this.authSub = this.authService.user$.subscribe((isLoggedIn) => {
       this.loggedIn = isLoggedIn;
     });
   }
@@ -33,7 +32,7 @@ export class LoginComponent implements OnInit {
   login() {
     const user = {
       email: this.email,
-      password: this.password
+      password: this.password,
     };
     this.authService.loginUser(user).then((result) => {
       if (result == null) {

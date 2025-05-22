@@ -5,16 +5,15 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
     return this.authService.user$.pipe(
       take(1),
-      map(isLoggedIn => {
+      map((isLoggedIn) => {
         if (!isLoggedIn) {
           this.router.navigate(['/login']);
           return false;

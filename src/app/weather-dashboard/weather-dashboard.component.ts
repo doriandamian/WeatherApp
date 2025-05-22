@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { CityListComponent } from './city-list/city-list.component';
 import { HighlightsGridComponent } from './highlights-grid/highlights-grid.component';
@@ -10,7 +10,6 @@ import { filter, Observable, switchMap } from 'rxjs';
 import { WeatherData } from '../shared/models/weather.model';
 import { City } from '../shared/models/city.model';
 import { CardModule } from 'primeng/card';
-import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-weather-dashboard',
@@ -35,11 +34,8 @@ export class WeatherDashboardComponent {
   ) {}
 
   ngOnInit() {
-    // de fiecare dată când se schimbă currentCity, facem fetch și emitem noul WeatherData
     this.currentWeather$ = this.cityService.currentCity$.pipe(
-      // 1) filtrăm doar orașele nenule
       filter((city): city is City => city !== null),
-      // 2) pentru fiecare oraș valid facem fetch
       switchMap((city) => this.weatherService.getCurrentWeather(city))
     );
   }

@@ -15,13 +15,6 @@ export class WeatherService {
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Date meteo curente:
-   * - temperature_2m
-   * - precipitation_probability
-   * - uv_index
-   * - visibility
-   */
   getCurrentWeather(city: City): Observable<WeatherData> {
     const params = new HttpParams()
       .set('latitude', city.lat.toString())
@@ -41,10 +34,6 @@ export class WeatherService {
       );
   }
 
-  /**
-   * Date istorice (archive):
-   * - daily temperature max/min
-   */
   getHistoricalWeather(city: City): Observable<HistoricalData[]> {
     const params = new HttpParams()
       .set('latitude', city.lat.toString())

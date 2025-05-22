@@ -9,7 +9,7 @@ import { City } from '../../../shared/models/city.model';
   standalone: true,
   imports: [CommonModule, CardModule, ButtonModule],
   templateUrl: './city-card.component.html',
-  styleUrls: ['./city-card.component.scss']
+  styleUrls: ['./city-card.component.scss'],
 })
 export class CityCardComponent {
   @Input() city!: City;

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HighlightCardComponent } from "./highlight-card/highlight-card.component";
+import { HighlightCardComponent } from './highlight-card/highlight-card.component';
 import { CommonModule } from '@angular/common';
 import { WeatherData } from '../../shared/models/weather.model';
 
@@ -8,7 +8,7 @@ import { WeatherData } from '../../shared/models/weather.model';
   standalone: true,
   imports: [HighlightCardComponent, CommonModule],
   templateUrl: './highlights-grid.component.html',
-  styleUrl: './highlights-grid.component.scss'
+  styleUrl: './highlights-grid.component.scss',
 })
 export class HighlightsGridComponent {
   @Input() data!: WeatherData;
@@ -19,6 +19,6 @@ export class HighlightsGridComponent {
     'precipitationProbability',
     'visibility',
     'uvIndex',
-    'apparentTemperature'
+    'apparentTemperature',
   ];
 }

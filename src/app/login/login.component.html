@@ -1,11 +1,36 @@
 <div class="login-container">
   <h2 *ngIf="!loggedIn">Log in</h2>
-  <div *ngIf="!loggedIn && errorMessage" class="error-message">{{ errorMessage }}</div>
-  <input *ngIf="!loggedIn" type="email" placeholder="Email" [(ngModel)]="email">
-  <input *ngIf="!loggedIn" type="password" placeholder="Password" [(ngModel)]="password">
+  <div *ngIf="!loggedIn && errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  <input
+    *ngIf="!loggedIn"
+    type="email"
+    placeholder="Email"
+    [(ngModel)]="email"
+  />
+  <input
+    *ngIf="!loggedIn"
+    type="password"
+    placeholder="Password"
+    [(ngModel)]="password"
+  />
   <button *ngIf="!loggedIn" (click)="login()">Login</button>
 
-  <p *ngIf="!loggedIn">Don't have an account? <button mat-raised-button color="accent" routerLink="/signup">Sign Up</button></p>
-  <p *ngIf="loggedIn"><button mat-raised-button color="accent" class="dashboard-button" routerLink="/dashboard">Dashboard</button></p>
-  
+  <p *ngIf="!loggedIn">
+    Don't have an account?
+    <button mat-raised-button color="accent" routerLink="/signup">
+      Sign Up
+    </button>
+  </p>
+  <p *ngIf="loggedIn">
+    <button
+      mat-raised-button
+      color="accent"
+      class="dashboard-button"
+      routerLink="/dashboard"
+    >
+      Dashboard
+    </button>
+  </p>
 </div>
