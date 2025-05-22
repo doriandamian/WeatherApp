@@ -1,10 +1,3 @@
-.dashboard-container {
-  display: flex;
-  min-height: 100vh;
-  font-family: sans-serif;
-  width: 100rem;
-}
-
 .main-content {
   flex-grow: 1;
   padding: 20px;
@@ -13,33 +6,44 @@
   overflow: hidden;
 
   @media only screen and (max-width: 768px) {
-    width: 100%;
   }
   @media only screen and (min-width: 768px) {
-    width: 100%;
-
     .location-section {
       margin-top: 1rem;
       margin-bottom: 20px;
       align-items: center;
-      width: 100%;
     }
 
-    .data-container {
+    .container {
       background-color: #efefef;
-      padding: 20px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
+      border-radius: 15px;
 
-      app-highlight-grid{
-        flex-grow: 2;
+      h2 {
+        padding: 10px 30px;
       }
 
-      app-weather-graph{
-        flex-grow: 3;
+      .data-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 0 30px;
+        gap: 30px;
+
+        app-highlight-grid {
+          flex-grow: 2;
+        }
+
+        app-weather-graph {
+          flex-grow: 3;
+        }
       }
     }
   }
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: sans-serif;
+  width: 100rem;
 }

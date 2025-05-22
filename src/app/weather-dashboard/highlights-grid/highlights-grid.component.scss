@@ -1,15 +1,19 @@
 .highlights-section {
-  margin-bottom: 20px;
+  // padding: 0 30px;
+  display: flex;
+  flex-direction: column;
 
-  h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
+  .data-container {
+    display: flex;
+    flex-direction: row;
   }
 
   .highlight-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto;
     gap: 10px;
+    height: 100%;
   }
 }
 
@@ -17,14 +21,36 @@
 }
 @media only screen and (min-width: 768px) {
   .highlights-section {
-  
-    h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
+
+
+    #temperature {
+      grid-column: 1;
+      grid-row: 1;
     }
-  
-    .highlight-grid {
-      display: grid;
+
+    #precipitation {
+      grid-column: 2 / 4;
+      grid-row: 1 / 2;
+    }
+
+    #precipitationProbability {
+      grid-column: 1;
+      grid-row: 2 / 4;
+    }
+
+    #visibility {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
+
+    #uvIndex {
+      grid-column: 2 / 3;
+      grid-row: 3 / 4;
+    }
+
+    #apparentTemperature {
+      grid-column: 3 / 4;
+      grid-row: 2 / 4;
     }
   }
 }

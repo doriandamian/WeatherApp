@@ -6,15 +6,13 @@
       field="name"
       (completeMethod)="searchCities($event)"
       (onSelect)="onSelect($event.value)"
-      placeholder="Search city..."
+      placeholder="Search here..."
       [forceSelection]="false"
       class="search-input"
     >
       <ng-template pTemplate="footer"></ng-template>
       <ng-template pTemplate="empty">
-        <div class="p-autocomplete-item">
-          No results found
-        </div>
+        <div class="p-autocomplete-item">No results found</div>
       </ng-template>
     </p-autoComplete>
     <span class="search-icon">

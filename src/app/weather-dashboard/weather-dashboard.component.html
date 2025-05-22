@@ -1,19 +1,21 @@
 <div class="dashboard-container">
-<main class="main-content">
-  <app-search-bar (citySelected)="cityService.addCity($event)"></app-search-bar>
+  <main class="main-content">
+    <app-search-bar
+      (citySelected)="cityService.addCity($event)"
+    ></app-search-bar>
 
-  <section class="location-section">
-    <app-city-list></app-city-list>
-  </section>
+    <section class="location-section">
+      <app-city-list></app-city-list>
+    </section>
 
-  <div class="data-container">
     <ng-container *ngIf="currentWeather$ | async as currentWeather">
-      <app-highlights-grid [data]="currentWeather"></app-highlights-grid>
+      <div class="container">
+        <h2>Today's highlight</h2>
+        <div class="data-container">
+          <app-highlights-grid [data]="currentWeather"></app-highlights-grid>
+          <app-weather-graph></app-weather-graph>
+        </div>
+      </div>
     </ng-container>
-
-    <app-weather-graph></app-weather-graph>
-  </div>
-</main>
+  </main>
 </div>
-
-
