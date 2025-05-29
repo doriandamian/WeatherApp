@@ -6,12 +6,14 @@
       </svg>
       <p>Weather</p>
     </button>
+
     <button class="sidebar-button active">
       <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"></path>
       </svg>
       <p>Home</p>
     </button>
+
     <button class="sidebar-button logout-button" (click)="logout()">
       <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
         <path
@@ -21,6 +23,16 @@
       <p>Logout</p>
     </button>
   </div>
+
+  <button class="sidebar-settings-button" (click)="openSettings()">
+    <svg viewBox="0 0 24 24" fill="currentColor" class="settings-icon">
+      <path
+        d="M12 15.5A3.5 3.5 0 1115.5 12 3.5 3.5 0 0112 15.5zm7.4-2.1l1.5-1.2-1.4-2.4 1.2-1.8-2.6-.5-.9-2.5-2 .3-1.4-2.1h-2.8l-1.4 2.1-2-.3-.9 2.5-2.6.5 1.2 1.8-1.4 2.4 1.5 1.2-1.5 1.2 1.4 2.4-1.2 1.8 2.6.5.9 2.5 2-.3 1.4 2.1h2.8l1.4-2.1 2 .3.9-2.5 2.6-.5-1.2-1.8 1.4-2.4z"
+      />
+    </svg>
+    <p>Settings</p>
+  </button>
+
   <div class="user-info">
     <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
       <path
@@ -29,4 +41,90 @@
     </svg>
     <p>Hello, User</p>
   </div>
+
+  <!-- Dialog de preferințe -->
+  <!-- <p-dialog class="prefs-dialog"
+    header="Preferences"
+    [(visible)]="displaySettings"
+    modal="false"
+    [style]="{ width: '500px' }"
+    [closable]="false"
+  >
+    <div class="prefs-form">
+      <label>
+        <p-radioButton 
+          name="unit" 
+          value="C" 
+          [(ngModel)]="selectedUnit">
+        </p-radioButton>
+        Celsius (°C)
+      </label>
+      <label>
+        <p-radioButton 
+          name="unit" 
+          value="F" 
+          [(ngModel)]="selectedUnit">
+        </p-radioButton>
+        Fahrenheit (°F)
+      </label>
+    </div>
+    <p-footer>
+      <button pButton type="button" label="Save" (click)="saveSettings()"></button>
+      <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="displaySettings=false"></button>
+    </p-footer>
+  </p-dialog> -->
+
+  <p-dialog
+    [(visible)]="displaySettings"
+    modal="true"
+    [style]="{ width: '40rem', height: '20rem' }"
+    styleClass="preferences-dialog"
+    [closable]="false"
+  >
+    <ng-template pTemplate="header"> Settings </ng-template>
+
+    <div class="preferences-content">
+      <h2>Unit:</h2>
+      <div class="unit-selection">
+        <div class="unit-option">
+          <p-radioButton
+            name="unit"
+            value="C"
+            [(ngModel)]="selectedUnit"
+            inputId="unitC"
+          ></p-radioButton>
+          <label for="unitC">Celsius (°C)</label>
+        </div>
+
+        <div class="unit-option">
+          <p-radioButton
+            name="unit"
+            value="F"
+            [(ngModel)]="selectedUnit"
+            inputId="unitF"
+          ></p-radioButton>
+          <label for="unitF">Fahrenheit (°F)</label>
+        </div>
+      </div>
+      <!-- aici poți adăuga și alte setări -->
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="preferences-footer">
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-secondary"
+          (click)="displaySettings = false"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Save"
+          (click)="saveSettings()"
+        ></button>
+      </div>
+    </ng-template>
+  </p-dialog>
 </aside>
