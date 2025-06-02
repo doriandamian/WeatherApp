@@ -92,7 +92,9 @@ export class WeatherService {
       precipitation:
         idx >= 0 ? `${hourly.precipitation[idx].toFixed(1)} mm` : 'N/A',
       apparentTemperature:
-        idx >= 0 ? hourly.apparent_temperature[idx] : current.temperature,
+        idx >= 0
+          ? hourly.apparent_temperature[idx].toString()
+          : current.temperature.toString(),
     };
   }
 
