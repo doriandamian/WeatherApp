@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AuthError, User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class AuthService {
     });
   }
 
-  loginUser(credentials: any): Promise<any> {
+  loginUser(credentials: User): Promise<void | AuthError> {
     return this.afAuth
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
@@ -34,15 +35,15 @@ export class AuthService {
         this.userSubject.next(true);
       })
       .catch((error) => {
-        console.log('Auth Service: login error...');
-        console.log('error code', error.code);
-        console.log('error', error);
+        console.error('Auth Service: login error...');
+        console.error('error code', error.code);
+        console.error('error', error);
         this.userSubject.next(false);
         return { isValid: false, message: error.message };
       });
   }
 
-  signupUser(user: any): Promise<any> {
+  signupUser(user: User): Promise<void | AuthError> {
     return this.afAuth
       .createUserWithEmailAndPassword(user.email, user.password)
       .then((result) => {

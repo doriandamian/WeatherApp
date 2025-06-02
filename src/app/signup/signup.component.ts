@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../shared/services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { User } from '../shared/models/user.model';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +23,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   signup() {
-    const user = {
+    const user: User = {
       email: this.email,
       password: this.password,
     };

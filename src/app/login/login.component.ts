@@ -5,6 +5,7 @@ import { AuthService } from '../shared/services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User } from '../shared/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const user = {
+    const user: User = {
       email: this.email,
       password: this.password,
     };

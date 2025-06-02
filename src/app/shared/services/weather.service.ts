@@ -27,7 +27,21 @@ export class WeatherService {
       .set('timezone', 'auto');
 
     return this.http
-      .get<{ current_weather: any; hourly: any }>(this.forecastUrl, { params })
+      .get<{
+        current_weather: {
+          time: string;
+          temperature: number;
+        };
+        hourly: {
+          time: string[];
+          temperature_2m: number[];
+          precipitation: number[];
+          precipitation_probability: number[];
+          uv_index: number[];
+          visibility: number[];
+          apparent_temperature: number[];
+        };
+      }>(this.forecastUrl, { params })
       .pipe(
         map((res) => this.toWeatherData(res.current_weather, res.hourly)),
         shareReplay({ bufferSize: 1, refCount: true })
@@ -43,11 +57,28 @@ export class WeatherService {
       .set('timezone', 'auto');
 
     return this.http
-      .get<any>(this.archiveUrl, { params })
+      .get<{ hourly: { time: string[]; temperature_2m: number[] } }>(
+        this.archiveUrl,
+        { params }
+      )
       .pipe(map((res) => this.toHistoricalData(res.hourly)));
   }
 
-  private toWeatherData(current: any, hourly: any): WeatherData {
+  private toWeatherData(
+    current: {
+      time: string;
+      temperature: number;
+    },
+    hourly: {
+      time: string[];
+      temperature_2m: number[];
+      precipitation: number[];
+      precipitation_probability: number[];
+      uv_index: number[];
+      visibility: number[];
+      apparent_temperature: number[];
+    }
+  ): WeatherData {
     const [datePart, timePart] = current.time.split('T');
     const hour = timePart.split(':')[0];
     const flooredTime = `${datePart}T${hour}:00`;
@@ -65,10 +96,13 @@ export class WeatherService {
     };
   }
 
-  private toHistoricalData(rawDaily: any): HistoricalData[] {
-    return rawDaily.time.map((date: string, i: number) => ({
+  private toHistoricalData(rawHourly: {
+    time: string[];
+    temperature_2m: number[];
+  }): HistoricalData[] {
+    return rawHourly.time.map((date: string, i: number) => ({
       date,
-      temp: rawDaily.temperature_2m[i],
+      temp: rawHourly.temperature_2m[i],
     }));
   }
 }
