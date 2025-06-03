@@ -69,15 +69,7 @@ export class WeatherService {
       time: string;
       temperature: number;
     },
-    hourly: {
-      time: string[];
-      temperature_2m: number[];
-      precipitation: number[];
-      precipitation_probability: number[];
-      uv_index: number[];
-      visibility: number[];
-      apparent_temperature: number[];
-    }
+    hourly: any
   ): WeatherData {
     const [datePart, timePart] = current.time.split('T');
     const hour = timePart.split(':')[0];
@@ -92,9 +84,7 @@ export class WeatherService {
       precipitation:
         idx >= 0 ? `${hourly.precipitation[idx].toFixed(1)} mm` : 'N/A',
       apparentTemperature:
-        idx >= 0
-          ? hourly.apparent_temperature[idx].toString()
-          : current.temperature.toString(),
+        idx >= 0 ? hourly.apparent_temperature[idx] : current.temperature,
     };
   }
 
