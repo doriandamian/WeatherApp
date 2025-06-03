@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WeatherService } from '../../../shared/services/weather.service';
+import { TempUnit, WeatherService } from '../../../shared/services/weather.service';
 import { HistoricalData } from '../../../shared/models/weather.model';
 import { filter, Subscription, switchMap } from 'rxjs';
 import { CityService } from '../../../shared/services/city.service';
@@ -16,6 +16,8 @@ import { NgChartsModule } from 'ng2-charts';
 })
 export class WeatherGraphComponent {
   private historicDataSub!: Subscription;
+  unit: TempUnit = 'C';
+  data: HistoricalData[] = [];
 
   chartData: ChartData<'line'> = {
     labels: [],
@@ -28,41 +30,47 @@ export class WeatherGraphComponent {
     ],
   };
 
-  chartOptions: ChartOptions<'line'> = {
-    responsive: true,
-    scales: {
-      y: {
-        min: -10,
-        max: 30,
-        ticks: {
-          stepSize: 10,
-          callback: (value) => value.toString(),
-        },
-        title: {
-          display: true,
-        },
-        border: {
-          display: false,
-        },
-      },
-      x: {
-        title: {
-          display: true,
-        },
-        grid: {
-          display: false,
-        },
-      },
-    },
-    plugins: {
-      legend: { display: false },
-    },
-  };
+   chartOptions: ChartOptions<'line'> = {};
+  //   responsive: true,
+  //   scales: {
+  //     y: {
+  //       min: -10,
+  //       max: 30,
+  //       ticks: {
+  //         stepSize: 10,
+  //         callback: (value) => value.toString(),
+  //       },
+  //       title: {
+  //         display: true,
+  //       },
+  //       border: {
+  //         display: false,
+  //       },
+  //     },
+  //     x: {
+  //       title: {
+  //         display: true,
+  //       },
+  //       grid: {
+  //         display: false,
+  //       },
+  //     },
+  //   },
+  //   plugins: {
+  //     legend: { display: false },
+  //   },
+  // };
 
   constructor(
     private weatherService: WeatherService,
     private cityService: CityService
-  ) {}
+  ) {
+    this.weatherService.unit$.subscribe(u => {
+      this.unit = u;
+      this.chartOptions = this.makeOptions(u);
+      this.updateChart(this.data);
+    });
+  }
 
   ngOnInit(): void {
     this.historicDataSub = this.cityService.currentCity$
@@ -72,6 +80,7 @@ export class WeatherGraphComponent {
       )
       .subscribe((data) => {
         this.updateChart(data);
+        this.data = data;
       });
   }
 
@@ -107,6 +116,11 @@ export class WeatherGraphComponent {
     });
 
     const temperatures = validData.map((d) => d.temp);
+    if (this.unit === 'F') {
+      temperatures.forEach((temp, index) => {
+        temperatures[index] = temp * 9 / 5 + 32;
+      });
+    }
 
     this.chartData = {
       labels,
@@ -121,6 +135,49 @@ export class WeatherGraphComponent {
           pointHoverRadius: 5,
         },
       ],
+    };
+  }
+
+  private makeOptions(unit: TempUnit): ChartOptions<'line'> {
+    // base bounds in °C
+    const minC = -10;
+    const maxC = 30;
+    const stepC = 10;
+
+    // conversion helpers
+    const toF = (c: number) => c * 9/5 + 32;
+    const toStepF = (cStep: number) => (toF(minC + cStep) - toF(minC));
+
+    const min = unit === 'C' ? minC : toF(minC);
+    const max = unit === 'C' ? maxC : toF(maxC);
+    const step = unit === 'C' ? stepC : toStepF(stepC);
+
+    return {
+      responsive: true,
+      scales: {
+        y: {
+          min,
+          max,
+          ticks: {
+            stepSize: step,
+            callback: value => unit === 'C'
+              ? `${value}°C`
+              : `${value}°F`
+          },
+          title: {
+            display: true,
+            text: unit === 'C' ? 'Temperature (°C)' : 'Temperature (°F)'
+          },
+          border: { display: false }
+        },
+        x: {
+          title: { display: true },
+          grid:  { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
     };
   }
 }

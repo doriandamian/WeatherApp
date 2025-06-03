@@ -1,10 +1,13 @@
 // src/app/core/services/weather.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { City } from '../models/city.model';
 import { WeatherData, HistoricalData } from '../models/weather.model';
+
+export type TempUnit = 'C' | 'F';
+const STORAGE_KEY = 'weather_app_unit';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,12 @@ import { WeatherData, HistoricalData } from '../models/weather.model';
 export class WeatherService {
   private forecastUrl = 'https://api.open-meteo.com/v1/forecast';
   private archiveUrl = 'https://archive-api.open-meteo.com/v1/archive';
+  private unitSubject = new BehaviorSubject<TempUnit>(
+    (localStorage.getItem(STORAGE_KEY) as TempUnit) || 'C'
+  );
+  unit$ = this.unitSubject.asObservable();
+
+  
 
   constructor(private http: HttpClient) {}
 
@@ -64,6 +73,10 @@ export class WeatherService {
       .pipe(map((res) => this.toHistoricalData(res.hourly)));
   }
 
+  setUnit(u: TempUnit) {
+    localStorage.setItem(STORAGE_KEY, u);
+    this.unitSubject.next(u);
+  }
   private toWeatherData(
     current: {
       time: string;
