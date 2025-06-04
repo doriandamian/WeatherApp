@@ -8,14 +8,16 @@
       <app-city-list></app-city-list>
     </section>
 
-    <ng-container *ngIf="currentWeather$ | async as currentWeather">
-      <div class="container">
-        <h2>Today's highlight</h2>
-        <div class="data-container">
-          <app-highlights-grid [data]="currentWeather"></app-highlights-grid>
-          <app-weather-graph></app-weather-graph>
+    <ng-container *ngIf="cityService.currentCity$ | async as currentCity">
+      <ng-container *ngIf="currentWeather$ | async as currentWeather">
+        <div class="container">
+          <h2>Today's highlight</h2>
+          <div class="data-container">
+            <app-highlights-grid [data]="currentWeather"></app-highlights-grid>
+            <app-weather-graph></app-weather-graph>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </ng-container>
   </main>
 </div>

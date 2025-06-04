@@ -28,7 +28,12 @@ export class CityService {
 
   addCity(city: City): void {
     const cities = this.citiesSubject.getValue();
-    if (cities.find((c) => c.name === city.name)) {
+
+    const alreadyExists = cities.some(
+      (c) => c.name === city.name && c.lat === city.lat && c.lon === city.lon
+    );
+    if (alreadyExists) {
+      this.setCurrentCity(city);
       return;
     }
 
@@ -36,24 +41,33 @@ export class CityService {
     this.citiesSubject.next(updated);
     this.saveToStorage();
 
-    this.citiesSubject.next([...cities, { ...city, isCurrent: false }]);
-    if (!this.currentCitySubject.getValue()) {
-      this.setCurrentCity(city);
-    }
+    this.setCurrentCity(city);
   }
 
   removeCity(city: City): void {
     const filtered = this.citiesSubject
       .getValue()
-      .filter((c) => c.name !== city.name);
+      .filter(
+        (c) =>
+          !(c.name === city.name && c.lat === city.lat && c.lon === city.lon)
+      );
     this.citiesSubject.next(filtered);
     this.saveToStorage();
 
     const current = this.currentCitySubject.getValue();
-    if (current?.name === city.name) {
+    if (
+      current &&
+      current.name === city.name &&
+      current.lat === city.lat &&
+      current.lon === city.lon
+    ) {
       const next = filtered.length ? filtered[0] : null;
       this.currentCitySubject.next(next);
       this.updateCurrentFlag(next);
+    }
+
+    if (filtered.length === 0) {
+      this.currentCitySubject.next(null);
     }
   }
 
@@ -65,7 +79,11 @@ export class CityService {
   private updateCurrentFlag(selected: City | null): void {
     const updated = this.citiesSubject.getValue().map((c) => ({
       ...c,
-      isCurrent: selected ? c.name === selected.name : false,
+      isCurrent: selected
+        ? c.name === selected.name &&
+          c.lat === selected.lat &&
+          c.lon === selected.lon
+        : false,
     }));
     this.citiesSubject.next(updated);
     this.saveToStorage();

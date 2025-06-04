@@ -1,13 +1,12 @@
 .city-carousel {
-  margin-top: 2rem;
-
   ::ng-deep .p-carousel-items-container {
     width: auto !important;
+    margin-left: 0.5rem;
   }
 
   ::ng-deep .p-carousel-item {
-    flex: 0 0 auto !important; // sa nu mai se intinda
-    width: auto !important; // optional
+    flex: 0 0 auto !important;
+    width: auto !important;
     display: flex;
     justify-content: center;
     margin-right: 1rem;
@@ -15,33 +14,12 @@
 
   ::ng-deep .p-carousel-content {
     display: flex;
-    justify-content: flex-start; // aliniere la stanga
+    justify-content: flex-start;
   }
 
   .p-carousel-container {
     min-height: 6rem;
   }
-
-  // .p-carousel-item {
-  //   display: flex;
-  //   justify-content: center;
-  // }
-
-  // .p-carousel-items-content {
-  //   justify-content: flex-start !important;
-  // }
-
-  // .p-carousel-items {
-  //   display: flex;
-  //   gap: 1rem; // distanță între carduri (opțional)
-  // }
-
-  // .p-carousel-item {
-  //   flex: 0 0 auto; // nu ocupa toată lățimea
-  //   display: flex;
-  //   justify-content: center;
-  //   width: auto; // sau setează o lățime fixă dacă vrei
-  // }
 
   ::ng-deep .p-carousel-prev,
   ::ng-deep .p-carousel-next {
@@ -51,7 +29,7 @@
     height: 2rem;
     border-radius: 50%;
     transition: background-color 0.2s;
-    margin: 1rem;
+    margin: 0.5rem;
   }
   ::ng-deep .p-carousel-prev:hover,
   ::ng-deep .p-carousel-next:hover {
@@ -66,4 +44,5 @@
   border: 1px dashed #ccc;
   border-radius: 8px;
   font-style: italic;
+  margin-left: 0.25rem;
 }

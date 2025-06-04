@@ -142,7 +142,7 @@ export class WeatherGraphComponent {
         },
         x: {
           title: { display: true },
-          grid: { display: true },
+          grid: { display: false },
         },
       },
       plugins: {
