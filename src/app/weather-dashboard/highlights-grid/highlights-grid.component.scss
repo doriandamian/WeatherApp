@@ -1,5 +1,4 @@
 .highlights-section {
-  // padding: 0 30px;
   display: flex;
   flex-direction: column;
 
@@ -12,12 +11,16 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto auto;
-    gap: 10px;
+    gap: 20px;           // space between cards, no overlap
     height: 100%;
+    padding: 1rem;
   }
 }
 
 @media only screen and (max-width: 768px) {
+  .highlight-grid {
+    grid-template-columns: 1fr;  // single column on small screens to avoid overlap
+  }
 }
 @media only screen and (min-width: 768px) {
   .highlights-section {
