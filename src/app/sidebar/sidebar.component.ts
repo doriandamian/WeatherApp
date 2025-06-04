@@ -11,16 +11,26 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, DialogModule, RadioButtonModule, ButtonModule, FormsModule],
+  imports: [
+    CommonModule,
+    DialogModule,
+    RadioButtonModule,
+    ButtonModule,
+    FormsModule,
+  ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit {
   displaySettings = false;
   selectedUnit: TempUnit = 'C';
-  
-  constructor(private authService: AuthService, private weatherService: WeatherService, private router: Router) {
-    this.weatherService.unit$.subscribe(u => this.selectedUnit = u);
+
+  constructor(
+    private authService: AuthService,
+    private weatherService: WeatherService,
+    private router: Router
+  ) {
+    this.weatherService.unit$.subscribe((u) => (this.selectedUnit = u));
   }
 
   ngOnInit(): void {}
@@ -36,7 +46,7 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-   openSettings() {
+  openSettings() {
     this.displaySettings = true;
   }
 

@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto auto;
-    gap: 20px;           // space between cards, no overlap
+    gap: 20px;
     height: 100%;
     padding: 1rem;
   }
@@ -19,7 +19,7 @@
 
 @media only screen and (max-width: 768px) {
   .highlight-grid {
-    grid-template-columns: 1fr;  // single column on small screens to avoid overlap
+    grid-template-columns: 1fr;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -36,7 +36,7 @@
 
     #precipitationProbability {
       grid-column: 1;
-      grid-row: 2 / 4;
+      grid-row: 2 / 8;
     }
 
     #visibility {
@@ -51,7 +51,7 @@
 
     #apparentTemperature {
       grid-column: 3 / 4;
-      grid-row: 2 / 4;
+      grid-row: 2 / 8;
     }
   }
 }

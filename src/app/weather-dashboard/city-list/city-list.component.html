@@ -2,7 +2,7 @@
   <p-carousel
     *ngIf="cities.length; else noCities"
     [value]="cities"
-    [numVisible]="5"
+    [numVisible]="getNumVisible(cities.length)"
     [numScroll]="1"
     [circular]="false"
     [showIndicators]="false"

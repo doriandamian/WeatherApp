@@ -1,14 +1,47 @@
 .city-carousel {
   margin-top: 2rem;
 
+  ::ng-deep .p-carousel-items-container {
+    width: auto !important;
+  }
+
+  ::ng-deep .p-carousel-item {
+    flex: 0 0 auto !important; // sa nu mai se intinda
+    width: auto !important; // optional
+    display: flex;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  ::ng-deep .p-carousel-content {
+    display: flex;
+    justify-content: flex-start; // aliniere la stanga
+  }
+
   .p-carousel-container {
     min-height: 6rem;
   }
 
-  .p-carousel-item {
-    display: flex;
-    justify-content: center;
-  }
+  // .p-carousel-item {
+  //   display: flex;
+  //   justify-content: center;
+  // }
+
+  // .p-carousel-items-content {
+  //   justify-content: flex-start !important;
+  // }
+
+  // .p-carousel-items {
+  //   display: flex;
+  //   gap: 1rem; // distanță între carduri (opțional)
+  // }
+
+  // .p-carousel-item {
+  //   flex: 0 0 auto; // nu ocupa toată lățimea
+  //   display: flex;
+  //   justify-content: center;
+  //   width: auto; // sau setează o lățime fixă dacă vrei
+  // }
 
   ::ng-deep .p-carousel-prev,
   ::ng-deep .p-carousel-next {

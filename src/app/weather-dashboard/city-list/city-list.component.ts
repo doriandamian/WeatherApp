@@ -27,4 +27,8 @@ export class CityListComponent {
   onSetCurrent(city: City) {
     this.cityService.setCurrentCity(city);
   }
+
+  getNumVisible(length: number): number {
+    return Math.min(length, 5);
+  }
 }

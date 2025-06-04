@@ -19,7 +19,6 @@ export class SearchBarComponent {
 
   constructor(
     private geoService: GeocodingService,
-    private renderer: Renderer2
   ) {}
 
   searchCities(event: { query: string }) {

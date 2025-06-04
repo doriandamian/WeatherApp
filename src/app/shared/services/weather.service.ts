@@ -1,4 +1,3 @@
-// src/app/core/services/weather.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -19,8 +18,6 @@ export class WeatherService {
     (localStorage.getItem(STORAGE_KEY) as TempUnit) || 'C'
   );
   unit$ = this.unitSubject.asObservable();
-
-  
 
   constructor(private http: HttpClient) {}
 
@@ -77,6 +74,7 @@ export class WeatherService {
     localStorage.setItem(STORAGE_KEY, u);
     this.unitSubject.next(u);
   }
+
   private toWeatherData(
     current: {
       time: string;

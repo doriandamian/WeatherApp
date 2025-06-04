@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { TempUnit, WeatherService } from '../../../shared/services/weather.service';
+import {
+  TempUnit,
+  WeatherService,
+} from '../../../shared/services/weather.service';
 import { HistoricalData } from '../../../shared/models/weather.model';
 import { filter, Subscription, switchMap } from 'rxjs';
 import { CityService } from '../../../shared/services/city.service';
@@ -30,42 +33,13 @@ export class WeatherGraphComponent {
     ],
   };
 
-   chartOptions: ChartOptions<'line'> = {};
-  //   responsive: true,
-  //   scales: {
-  //     y: {
-  //       min: -10,
-  //       max: 30,
-  //       ticks: {
-  //         stepSize: 10,
-  //         callback: (value) => value.toString(),
-  //       },
-  //       title: {
-  //         display: true,
-  //       },
-  //       border: {
-  //         display: false,
-  //       },
-  //     },
-  //     x: {
-  //       title: {
-  //         display: true,
-  //       },
-  //       grid: {
-  //         display: false,
-  //       },
-  //     },
-  //   },
-  //   plugins: {
-  //     legend: { display: false },
-  //   },
-  // };
+  chartOptions: ChartOptions<'line'> = {};
 
   constructor(
     private weatherService: WeatherService,
     private cityService: CityService
   ) {
-    this.weatherService.unit$.subscribe(u => {
+    this.weatherService.unit$.subscribe((u) => {
       this.unit = u;
       this.chartOptions = this.makeOptions(u);
       this.updateChart(this.data);
@@ -118,7 +92,7 @@ export class WeatherGraphComponent {
     const temperatures = validData.map((d) => d.temp);
     if (this.unit === 'F') {
       temperatures.forEach((temp, index) => {
-        temperatures[index] = temp * 9 / 5 + 32;
+        temperatures[index] = (temp * 9) / 5 + 32;
       });
     }
 
@@ -139,14 +113,12 @@ export class WeatherGraphComponent {
   }
 
   private makeOptions(unit: TempUnit): ChartOptions<'line'> {
-    // base bounds in °C
-    const minC = -10;
-    const maxC = 30;
+    const minC = -20;
+    const maxC = 50;
     const stepC = 10;
 
-    // conversion helpers
-    const toF = (c: number) => c * 9/5 + 32;
-    const toStepF = (cStep: number) => (toF(minC + cStep) - toF(minC));
+    const toF = (c: number) => (c * 9) / 5 + 32;
+    const toStepF = (cStep: number) => toF(minC + cStep) - toF(minC);
 
     const min = unit === 'C' ? minC : toF(minC);
     const max = unit === 'C' ? maxC : toF(maxC);
@@ -160,24 +132,22 @@ export class WeatherGraphComponent {
           max,
           ticks: {
             stepSize: step,
-            callback: value => unit === 'C'
-              ? `${value}°C`
-              : `${value}°F`
+            callback: (value) => (unit === 'C' ? `${value}°C` : `${value}°F`),
           },
           title: {
             display: true,
-            text: unit === 'C' ? 'Temperature (°C)' : 'Temperature (°F)'
+            text: unit === 'C' ? 'Temperature (°C)' : 'Temperature (°F)',
           },
-          border: { display: false }
+          border: { display: false },
         },
         x: {
           title: { display: true },
-          grid:  { display: false }
-        }
+          grid: { display: true },
+        },
       },
       plugins: {
-        legend: { display: false }
-      }
+        legend: { display: false },
+      },
     };
   }
 }
