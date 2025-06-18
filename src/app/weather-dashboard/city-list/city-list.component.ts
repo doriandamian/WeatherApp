@@ -5,19 +5,27 @@ import { CityService } from '../../shared/services/city.service';
 import { Observable } from 'rxjs';
 import { City } from '../../shared/models/city.model';
 import { CarouselModule } from 'primeng/carousel';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-city-list',
   standalone: true,
-  imports: [CityCardComponent, CommonModule, CarouselModule],
+  imports: [CityCardComponent, CommonModule, CarouselModule, FormsModule],
   templateUrl: './city-list.component.html',
   styleUrl: './city-list.component.scss',
 })
 export class CityListComponent {
   cities$!: Observable<City[]>;
+  showFavoritesOnly = false;
 
   constructor(public cityService: CityService) {
-    this.cities$ = this.cityService.cities$;
+    this.onFilterChange();
+  }
+
+  onFilterChange() {
+    this.cities$ = this.showFavoritesOnly
+      ? this.cityService.favoriteCities$
+      : this.cityService.cities$;
   }
 
   onDelete(city: City) {
@@ -26,6 +34,10 @@ export class CityListComponent {
 
   onSetCurrent(city: City) {
     this.cityService.setCurrentCity(city);
+  }
+
+  onToggleFavorite(city: City) {
+    this.cityService.toggleFavorite(city);
   }
 
   getNumVisible(length: number): number {

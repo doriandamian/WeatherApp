@@ -1,29 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
+import { AuthService } from './authentication/auth.service';
 import { City } from '../models/city.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CityService {
-  private readonly STORAGE_KEY = 'weather_app_cities';
+  private STORAGE_KEY = 'weather_app_cities';
 
   private citiesSubject = new BehaviorSubject<City[]>([]);
   readonly cities$ = this.citiesSubject.asObservable();
+  readonly favoriteCities$ = this.citiesSubject
+    .asObservable()
+    .pipe(map((cities) => cities.filter((c) => c.isFavorite)));
 
   private currentCitySubject = new BehaviorSubject<City | null>(null);
   readonly currentCity$ = this.currentCitySubject.asObservable();
 
-  constructor() {
-    const stored = localStorage.getItem(this.STORAGE_KEY);
-    const cities: City[] = stored ? JSON.parse(stored) : [];
-
-    this.citiesSubject = new BehaviorSubject<City[]>(cities);
-    this.cities$ = this.citiesSubject.asObservable();
-
-    const current = cities.find((c) => c.isCurrent) || null;
-    this.currentCitySubject = new BehaviorSubject<City | null>(current);
-    this.currentCity$ = this.currentCitySubject.asObservable();
+  constructor(private authService: AuthService) {
+    this.authService.firebaseUser$.subscribe((user) => {
+      this.STORAGE_KEY = `${this.STORAGE_KEY}_${user ? user.uid : 'guest'}`;
+      this.loadFromStorage();
+    });
   }
 
   addCity(city: City): void {
@@ -37,7 +36,10 @@ export class CityService {
       return;
     }
 
-    const updated = [...cities, { ...city, isCurrent: false }];
+    const updated = [
+      ...cities,
+      { ...city, isCurrent: false, isFavorite: city.isFavorite ?? false },
+    ];
     this.citiesSubject.next(updated);
     this.saveToStorage();
 
@@ -74,6 +76,24 @@ export class CityService {
   setCurrentCity(city: City): void {
     this.currentCitySubject.next(city);
     this.updateCurrentFlag(city);
+  }
+
+   toggleFavorite(city: City): void {
+    const updated = this.citiesSubject.getValue().map((c) =>
+      c.name === city.name && c.lat === city.lat && c.lon === city.lon
+        ? { ...c, isFavorite: !c.isFavorite }
+        : c
+    );
+    this.citiesSubject.next(updated);
+    this.saveToStorage();
+  }
+
+  private loadFromStorage(): void {
+    const stored = localStorage.getItem(this.STORAGE_KEY);
+    const cities: City[] = stored ? JSON.parse(stored) : [];
+    this.citiesSubject.next(cities);
+    const current = cities.find((c) => c.isCurrent) || null;
+    this.currentCitySubject.next(current);
   }
 
   private updateCurrentFlag(selected: City | null): void {

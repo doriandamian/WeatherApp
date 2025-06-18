@@ -3,4 +3,5 @@ export interface City {
   lat: number;
   lon: number;
   isCurrent?: boolean;
+  isFavorite?: boolean;
 }

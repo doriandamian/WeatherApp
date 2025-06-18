@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthError, User } from '../../models/user.model';
+import firebase from 'firebase/compat/app';
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,8 @@ import { AuthError, User } from '../../models/user.model';
 export class AuthService {
   private userSubject = new BehaviorSubject<boolean>(false);
   public user$ = this.userSubject.asObservable();
+  private firebaseUserSubject = new BehaviorSubject<firebase.User | null>(null);
+  public firebaseUser$ = this.firebaseUserSubject.asObservable();
 
   constructor(
     private router: Router,
@@ -20,8 +24,10 @@ export class AuthService {
       this.ngZone.run(() => {
         if (user) {
           this.userSubject.next(true);
+          this.firebaseUserSubject.next(user);
         } else {
           this.userSubject.next(false);
+          this.firebaseUserSubject.next(null);
         }
       });
     });
@@ -30,15 +36,17 @@ export class AuthService {
   loginUser(credentials: User): Promise<void | AuthError> {
     return this.afAuth
       .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(() => {
+      .then((result) => {
         console.log('Auth Service: loginUser: success');
         this.userSubject.next(true);
+        this.firebaseUserSubject.next(result.user);
       })
       .catch((error) => {
         console.error('Auth Service: login error...');
         console.error('error code', error.code);
         console.error('error', error);
         this.userSubject.next(false);
+        this.firebaseUserSubject.next(null);
         return { isValid: false, message: error.message };
       });
   }
@@ -47,6 +55,7 @@ export class AuthService {
     return this.afAuth
       .createUserWithEmailAndPassword(user.email, user.password)
       .then((result) => {
+        this.firebaseUserSubject.next(result.user);
         result.user?.sendEmailVerification().catch((error) => {
           console.error('Error sending verification email:', error);
         });
@@ -63,6 +72,7 @@ export class AuthService {
       .then(() => {
         console.log('User logged out');
         this.userSubject.next(false);
+        this.firebaseUserSubject.next(null);
         this.router.navigate(['/login']);
       })
       .catch((error) => {

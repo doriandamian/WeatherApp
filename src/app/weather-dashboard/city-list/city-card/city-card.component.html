@@ -3,6 +3,13 @@
   [class.active]="city.isCurrent"
   (click)="setCurrent.emit(city)"
 >
+  <span
+    class="favorite-btn"
+    (click)="onToggleFavorite($event)"
+    [class.filled]="city.isFavorite"
+  >
+    <i class="pi" [ngClass]="city.isFavorite ? 'pi-star-fill' : 'pi-star'"></i>
+  </span>
   <span class="delete-btn" (click)="onDelete($event)">×</span>
   <div class="city-name">{{ city.name }}</div>
 </div>
