@@ -7,7 +7,8 @@ import { City } from '../models/city.model';
   providedIn: 'root',
 })
 export class CityService {
-  private STORAGE_KEY = 'weather_app_cities';
+  private readonly STORAGE_KEY_BASE = 'weather_app_cities';
+  private STORAGE_KEY = `${this.STORAGE_KEY_BASE}_guest`;
 
   private citiesSubject = new BehaviorSubject<City[]>([]);
   readonly cities$ = this.citiesSubject.asObservable();
@@ -20,9 +21,10 @@ export class CityService {
 
   constructor(private authService: AuthService) {
     this.authService.firebaseUser$.subscribe((user) => {
-      this.STORAGE_KEY = `${this.STORAGE_KEY}_${user ? user.uid : 'guest'}`;
+      this.STORAGE_KEY = `${this.STORAGE_KEY_BASE}_${user ? user.email : 'guest'}`;
       this.loadFromStorage();
     });
+    this.loadFromStorage();
   }
 
   addCity(city: City): void {
