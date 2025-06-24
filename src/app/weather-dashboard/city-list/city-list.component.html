@@ -1,4 +1,10 @@
 <ng-container *ngIf="cities$ | async as cities">
+   <div class="filter-container">
+    <select [(ngModel)]="showFavoritesOnly" (ngModelChange)="onFilterChange()">
+      <option [ngValue]="false">All</option>
+      <option [ngValue]="true">Favorites</option>
+    </select>
+  </div>
   <p-carousel
     *ngIf="cities.length; else noCities"
     [value]="cities"
@@ -14,6 +20,7 @@
         [city]="city"
         (delete)="onDelete(city)"
         (setCurrent)="onSetCurrent(city)"
+        (toggleFavorite)="onToggleFavorite(city)"
       ></app-city-card>
     </ng-template>
   </p-carousel>

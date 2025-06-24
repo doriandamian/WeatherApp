@@ -15,9 +15,15 @@ export class CityCardComponent {
   @Input() city!: City;
   @Output() delete = new EventEmitter<City>();
   @Output() setCurrent = new EventEmitter<City>();
+  @Output() toggleFavorite = new EventEmitter<City>();
 
   onDelete(event: MouseEvent) {
     event.stopPropagation();
     this.delete.emit(this.city);
+  }
+
+  onToggleFavorite(event: MouseEvent) {
+    event.stopPropagation();
+    this.toggleFavorite.emit(this.city);
   }
 }

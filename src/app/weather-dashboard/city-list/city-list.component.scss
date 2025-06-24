@@ -46,3 +46,14 @@
   font-style: italic;
   margin-left: 0.25rem;
 }
+
+.filter-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0.5rem;
+
+  select {
+    padding: 0.25rem 0.5rem;
+    font-size: 1.2rem;
+  }
+}

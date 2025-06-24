@@ -40,12 +40,34 @@
     right: 0.5rem;
     background: transparent;
     border: none;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: rgba(255, 0, 0, 0.7);
     opacity: 0;
     transition: opacity 0.2s;
     line-height: 1;
     padding: 0;
+  }
+
+   .favorite-btn {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    color: #ffc107;
+    opacity: 0;
+    transition: opacity 0.2s;
+    line-height: 1;
+    padding: 0;
+
+    &.filled i {
+      color: #ffc107;
+    }
+  }
+
+  &:hover .favorite-btn {
+    opacity: 1;
   }
 
   &:hover .delete-btn {

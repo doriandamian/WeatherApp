@@ -26,6 +26,7 @@ export class GeocodingService {
           lat: r.latitude,
           lon: r.longitude,
           isCurrent: false,
+          isFavorite: false,
         }))
       ),
       catchError(() => of([]))
