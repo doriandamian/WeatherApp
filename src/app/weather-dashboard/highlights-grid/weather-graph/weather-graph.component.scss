@@ -2,17 +2,49 @@
   margin-bottom: 20px;
   width: 100%;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 
   .graph-container {
     width: 100%;
-    height: auto;
+    min-height: 220px;
+    height: 28vw;
+    max-height: 340px;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 
     canvas {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 140px;
+      max-height: 320px;
     }
+  }
+
+@media (max-width: 900px) {
+  .graph-section .graph-container {
+    min-height: 120px;
+    height: 40vw;
+    max-height: 220px;
+  }
+  .graph-section .graph-container canvas {
+    min-height: 100px;
+    max-height: 200px;
+  }
+}
+}
+
+@media (max-width: 900px) {
+  .graph-section .graph-container {
+    min-height: 220px;
+    height: 45vw;
+    max-height: 320px;
+  }
+  .graph-section .graph-container canvas {
+    min-height: 180px;
+    max-height: 300px;
   }
 }
