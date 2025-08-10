@@ -1,40 +1,58 @@
-.city-carousel {
-  ::ng-deep .p-carousel-items-container {
-    width: auto !important;
-    margin-left: 0.5rem;
-  }
 
-  ::ng-deep .p-carousel-item {
-    flex: 0 0 auto !important;
-    width: auto !important;
-    display: flex;
-    justify-content: center;
-    margin-right: 1rem;
-  }
+.city-scroll-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1270px;
+  margin: 0 auto 1rem auto;
+  position: relative;
+}
 
-  ::ng-deep .p-carousel-content {
-    display: flex;
-    justify-content: flex-start;
-  }
+.city-scroll-row {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #b2ebf2 #e0f7fa;
+}
+.city-scroll-row::-webkit-scrollbar {
+  height: 8px;
+}
+.city-scroll-row::-webkit-scrollbar-thumb {
+  background: #b2ebf2;
+  border-radius: 4px;
+}
+.city-scroll-row::-webkit-scrollbar-track {
+  background: #e0f7fa;
+}
 
-  .p-carousel-container {
-    min-height: 6rem;
-  }
-
-  ::ng-deep .p-carousel-prev,
-  ::ng-deep .p-carousel-next {
-    background-color: lightcyan;
-    border: none;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-    margin: 0.5rem;
-  }
-  ::ng-deep .p-carousel-prev:hover,
-  ::ng-deep .p-carousel-next:hover {
-    background-color: lightblue;
-  }
+.scroll-arrow {
+  background: lightcyan;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 2rem;
+  color: #007b8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+  z-index: 2;
+}
+.scroll-arrow:hover {
+  background: #b2ebf2;
+}
+.scroll-arrow.left {
+  margin-right: 0.5rem;
+}
+.scroll-arrow.right {
+  margin-left: 0.5rem;
 }
 .empty-placeholder {
   padding: 2rem;
